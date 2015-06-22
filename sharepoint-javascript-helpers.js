@@ -74,7 +74,7 @@ SharePoint.GetCurrentUserEmail = function(site) {
   SPContext.executeQueryAsync(
     function(sender, args) {
       dfd.resolve(currentUser.get_email());
-    }),
+    },
     SharePoint.Error);
   return dfd.promise();
 };
