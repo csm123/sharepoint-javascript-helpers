@@ -15,7 +15,7 @@ SharePoint.Utils.GetContext = function(site) {
   }
 };
 
-SharePoint.AddItem = function (list, data, site) {
+SharePoint.AddListItem = function (list, data, site) {
   var dfd = $.Deferred();
   var SPContext = SharePoint.Utils.GetContext(site);
 
