@@ -2,9 +2,15 @@
 
 SharePoint JavaScript Helpers (SJH) makes it easier to work with SharePoint lists through JavaScript.
 
-SJH returns standard JavaScript objects, not SharePoint enumerators or other exotic creatures, so it's easy to incorporate into your code.
+SJH returns promises and then standard JavaScript objects, not SharePoint enumerators or other exotic creatures, so it's easy to incorporate into your code.
 
 This was built to be fully compatible with popular front-end libraries like React JS. Join the future of SharePoint front-end development.
+
+## Promise, what?
+
+When you query the SharePoint API, the response is not immediate. Once the response comes back, you'll wnat to do something with it.
+
+A promise tells SJH what to do once the response comes back.
 
 ## Compatibility
 
@@ -44,7 +50,9 @@ Seed the file with what you need for SJH, then add a test.
 SP.SOD.executeFunc("sp.js");
 ExecuteOrDelayUntilScriptLoaded(sjhTest, "sp.js");
 function sjhTest() {
-	SharePoint.GetCurrentUserEmail().done(function(user) { $("#sjh-test").html("<p>Test succeeded. Hello, " + user + "!</p>"); });
+	SharePoint.GetCurrentUserEmail().done(function(user) {
+    $("#sjh-test").html("<p>Test succeeded. Hello, " + user + "!</p>");
+    });
 }
 </script>
 <!-- End SJH test -->
@@ -103,9 +111,12 @@ SharePoint.GetListItems(ListName, Query, Fields, Site)
 
 Create a custom list called Test. It will start with just one column, Title.
 
+Call GetListItems, and specify what happens when the items are returned.
+
 ```javascript
 SharePoint.GetListItems("Test", null, ["Title"], null).done(function(items) {
-  alert("Read list item test succeed. Here are the items from Test: " + _.pluck(items, "Title").join(", "));
+  alert("Read list item test succeed. Here are the items from Test: " +
+    _.pluck(items, "Title").join(", "));
 });
 ```
 
