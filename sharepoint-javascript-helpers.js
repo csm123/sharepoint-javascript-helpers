@@ -8,7 +8,7 @@ var SharePoint = {};
 SharePoint.AddItem = function (site, list, data) {
   /* .resolve(item) */
   var dfd = $.Deferred();
-  setTimeout(function() { dfd.resolve(true); console.log('done');}, 2000);
+  setTimeout(function() { dfd.resolve(true); console.log("done");}, 2000);
 
   return dfd.promise();
 };
@@ -17,8 +17,6 @@ SharePoint.Error = function(sender, args) {
   alert('An error has occurred.' + '\n\n' + args.get_message() +
     args.get_stackTrace());
 };
-
-var Init = {};
 
 /*
 GetListItems(listName, query, fields, site)
@@ -74,9 +72,10 @@ SharePoint.GetCurrentUserEmail = function() {
   var website = context.get_web();
   var currentUser = website.get_currentUser();
   context.load(currentUser);
-  context.executeQueryAsync(Function.createDelegate(this, function(sender, args) {
-  dfd.resolve(currentUser.get_email().toLowerCase());
-  }),
+  context.executeQueryAsync(Function.createDelegate(this,
+    function(sender, args) {
+      dfd.resolve(currentUser.get_email());
+    }),
   Function.createDelegate(this, SharePoint.Error));
   return dfd.promise();
 };

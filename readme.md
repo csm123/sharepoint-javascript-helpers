@@ -1,6 +1,6 @@
 # SharePoint JavaScript Helpers
 
-SharePoint JavaScript Helpers (SJH) makes it easier to work with the SharePoint API through JavaScript.
+SharePoint JavaScript Helpers (SJH) makes it easier to work with SharePoint lists through JavaScript.
 
 SJH returns standard JavaScript objects, not SharePoint enumerators or other exotic creatures, so it's easy to incorporate into your code.
 
@@ -21,13 +21,11 @@ You can load libraries locally or through CDN prior to loading the JavaScript he
 
 For example:
 
-## Setup
+## Easy Setup
 
-There's the easy way and the hard way to add JavaScript to a SharePoint page.
+These steps work in SharePoint 2010, 2013, and Office 365.
 
-First, the easy way:
-
-If you're using SharePoint 2013, disable the Minimal Download Strategy site feature.
+If you're using SharePoint 2013 or Office 365, disable the Minimal Download Strategy site feature.
 
 Create a text file in SiteAssets, using SharePoint Designer. Call it myscripts.txt.
 
@@ -62,6 +60,68 @@ SJH focuses on certain use cases. To request another, file an Issue on this GitH
 
 ### Get list items
 
+```javascript
+SharePoint.GetListItems(ListName, Query, Fields, Site)
+```
+
+**ListName**
+  ***Required***
+  The name of the list on SharePoint, as it appears in the list URL.
+
+  ex. "Documents"
+
+**Query**
+  ***Optional***
+  A query to filter, sort, or limit the list items returned. It is written in CAML, Microsoft's preferred method for querying SharePoint lists.
+
+  Example:
+
+  ```
+  '<View><Query><Where><Eq><FieldRef Name=\'Active\'/>' +
+    '<Value Type=\'Boolean\'>1</Value></Eq></Where></Query></View>'"
+  ```
+
+  See [more examples of CAML](http://sharepoint-works.blogspot.com/2012/05/caml-query-tutorial-for-sharepoint.html).
+
+  To return all items, type null (with no quotes) in place of a query.
+
+**Fields**
+  ***Required***
+  An array of fields to retrieve from the list.
+
+  ex. ["Title", "Description"]
+
+**Site**
+  ***Optional***
+  The relative URL of the SharePoint site containing the list.
+
+  ex. "/CoolStuff"
+
+  To use the current site, type null (with no quotes).
+
+#### In practice:
+
+Create a custom list called Test. It will start with just one column, Title.
+
+```javascript
+SharePoint.GetListItems("Test", null, ["Title"], null).done(function(items) {
+  alert("Read list item test succeed. Here are the items from Test: " + _.pluck(items, "Title").join(", "));
+});
+```
+
 ### Add an item to a list
 
+
+
 ### Get the current user's e-mail address
+
+SharePoint.GetCurrentUserEmail().done(
+  function(email) {
+    alert("Your e-mail address is " + email);
+  }
+  );
+
+## Inspirations
+
+- Microsoft's [quick reference to SharePoint's JavaScript Client Side Object Model](https://msdn.microsoft.com/en-us/library/office/jj163201.aspx), which powers SJH.
+- [https://spservices.codeplex.com/](SPServices), for pioneering and continuing to provide excellent JavaScript helpers for SharePoint.
