@@ -27,9 +27,12 @@ There's the easy way and the hard way to add JavaScript to a SharePoint page.
 
 First, the easy way:
 
-1. If you're using SharePoint 2013, disable the Minimal Download Strategy site feature.
-2. Create a text file in SiteAssets, using SharePoint Designer. Call it myscripts.txt.
-3. Seed the file with what you need for SJH, then add a test.
+If you're using SharePoint 2013, disable the Minimal Download Strategy site feature.
+
+Create a text file in SiteAssets, using SharePoint Designer. Call it myscripts.txt.
+
+Seed the file with what you need for SJH, then add a test.
+
 ```
 <!-- Begin SJH initialization -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.9.3/lodash.min.js"></script>
@@ -48,8 +51,10 @@ function sjhTest() {
 </script>
 <!-- End SJH test -->
 ```
-4. Add a content editor web part, and link it to the file you created in SiteAssets.
-5. Reload your page and confirm that the test passes. You should see a message inside the content editor web part with your e-mail address.
+
+Add a content editor web part, and link it to the file you created in SiteAssets.
+
+Reload your page and confirm that the test passes. You should see a message inside the content editor web part with your e-mail address.
 
 ## Uses
 
