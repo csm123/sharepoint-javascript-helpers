@@ -1,5 +1,7 @@
 # SharePoint JavaScript Helpers
 
+**IN DEVELOPMENT, NOT READY FOR PRODUCTION USE**
+
 SharePoint JavaScript Helpers (SJH) makes it easier to work with SharePoint lists through JavaScript.
 
 SJH returns promises and then standard JavaScript objects, not SharePoint enumerators or other exotic creatures, so it's easy to incorporate into your code.
@@ -129,4 +131,4 @@ SharePoint.GetCurrentUserEmail().done(
 ## Inspirations
 
 - Microsoft's [quick reference to SharePoint's JavaScript Client Side Object Model](https://msdn.microsoft.com/en-us/library/office/jj163201.aspx), which powers SJH.
-- [https://spservices.codeplex.com/](SPServices), for pioneering and continuing to provide excellent JavaScript helpers for SharePoint.
+- [SPServices](https://spservices.codeplex.com/), for pioneering and continuing to provide excellent JavaScript helpers for SharePoint.
