@@ -55,7 +55,7 @@ SharePoint.GetListItems = function(listName, query,
       while (listItemEnumerator.moveNext()) {
         var oListItem = listItemEnumerator.get_current();
         var listItemAsObject = {};
-        _.each(fields, function(field) {
+        jQuery.each(fields, function(index, field) {
           listItemAsObject[field] = oListItem.get_item(field);
         });
         listItemArray.push(listItemAsObject);

@@ -8,7 +8,7 @@ This was built to be fully compatible with popular front-end libraries like Reac
 
 ## Promise, what?
 
-When you query the SharePoint API, the response is not immediate. Once the response comes back, you'll wnat to do something with it.
+When you query the SharePoint API, the response is not immediate. Once the response comes back, you'll want to do something with it.
 
 A promise tells SJH what to do once the response comes back.
 
@@ -21,11 +21,6 @@ SharePoint:
 JavaScript Libraries:
 
 - jQuery
-- lodash
-
-You can load libraries locally or through CDN prior to loading the JavaScript helpers.
-
-For example:
 
 ## Easy Setup
 
@@ -39,7 +34,6 @@ Seed the file with what you need for SJH, then add a test.
 
 ```
 <!-- Begin SJH initialization -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.9.3/lodash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://rawgit.com/csm123/sharepoint-javascript-helpers/master/sharepoint-javascript-helpers.js"></script>
 <!-- End SJH initialization -->
