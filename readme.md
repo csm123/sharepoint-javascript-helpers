@@ -4,11 +4,11 @@
 
 SharePoint JavaScript Helpers (SJH) makes it easier to work with SharePoint lists through JavaScript.
 
-SJH returns promises and then standard JavaScript objects, not SharePoint enumerators or other exotic creatures, so it's easy to incorporate into your code.
+SJH returns promises* and then standard JavaScript objects, not SharePoint enumerators or other exotic creatures, so it's easy to incorporate into your code.
 
 This was built to be fully compatible with popular front-end libraries like React JS. Join the future of SharePoint front-end development.
 
-## Promise, what?
+## * Promise, what?
 
 When you query the SharePoint API, the response is not immediate. Once the response comes back, you'll want to do something with it.
 
@@ -111,13 +111,11 @@ Call GetListItems, and specify what happens when the items are returned.
 
 ```javascript
 SharePoint.GetListItems("Test", null, ["Title"], null).done(function(items) {
-  alert("Read list item test succeed. Here are the items from Test: " +
-    _.pluck(items, "Title").join(", "));
-});
+		var itemsAsList =  $.map(items, function(item) { return item["Title"]; }).join(", ");
+		$("#sjh-test-getListItems").html("<p>Read list item test succeed. Here are the items from Test: " + itemsAsList);
+	});
 ```
-
 ### Add an item to a list
-
 
 
 ### Get the current user's e-mail address

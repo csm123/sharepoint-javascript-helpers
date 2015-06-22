@@ -5,44 +5,52 @@
 
 var SharePoint = {};
 
+SharePoint.Utils = {};
+
+SharePoint.Utils.GetContext = function(site) {
+  if (site) {
+    return new SP.ClientContext(site);
+  } else {
+    return new SP.ClientContext.get_current();
+  }
+};
+
 SharePoint.AddItem = function (site, list, data) {
   /* .resolve(item) */
   var dfd = $.Deferred();
-  setTimeout(function() { dfd.resolve(true); console.log("done");}, 2000);
+  var SPContext = SharePoint.Utils.GetContext(site);
+
+  var oList = SPContext.get_web().get_lists().getByTitle(list);
+
+  var itemCreateInfo = new SP.ListItemCreationInformation();
+  var oListItem = oList.addItem(itemCreateInfo);
+
+  $.each(data, function(key, value) {
+    oListItem.set_item(key, value);
+    });
+
+  oListItem.update();
+
+  SPContext.load(oListItem);
+  SPContext.executeQueryAsync(
+      function() { dfd.resolve(); },
+      Function.createDelegate(this, SharePoint.Error)
+  );
 
   return dfd.promise();
 };
 
 SharePoint.Error = function(sender, args) {
-  alert('An error has occurred.' + '\n\n' + args.get_message() +
-    args.get_stackTrace());
+  var message = args.get_message() || "";
+  var stackTrace = args.get_stackTrace() || "";
+  alert('An error has occurred.' + '\n\n' + message +
+  stackTrace);
 };
 
-/*
-GetListItems(listName, query, fields, site)
-
-listName
-the name of your list, as specified under the List Settings
-
-query
-a CAML query to determine which items to return. Specify null to
-return all items.
-
-fields
-An array of fields to return from the list. ex. ["Title", "Description"]
-
-site
-Leave blank for current site, or specify a releative URL for the site
-*/
 SharePoint.GetListItems = function(listName, query,
   fields, site) {
   var dfd = $.Deferred(function() {
-    var SPContext;
-    if (site) {
-      SPContext = new SP.ClientContext(site);
-    } else {
-      SPContext = new SP.ClientContext.get_current();
-    }
+    var SPContext = SharePoint.Utils.GetContext(site);
     var web = SPContext.get_web();
     var list = web.get_lists().getByTitle(listName);
     var camlQuery = new SP.CamlQuery();
@@ -55,7 +63,7 @@ SharePoint.GetListItems = function(listName, query,
       while (listItemEnumerator.moveNext()) {
         var oListItem = listItemEnumerator.get_current();
         var listItemAsObject = {};
-        jQuery.each(fields, function(index, field) {
+        $.each(fields, function(index, field) {
           listItemAsObject[field] = oListItem.get_item(field);
         });
         listItemArray.push(listItemAsObject);
