@@ -34,7 +34,7 @@ Create a text file in SiteAssets, using SharePoint Designer. Call it myscripts.t
 
 Seed the file with what you need for SJH, then add a test.
 
-```
+```html
 <!-- Begin SJH initialization -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://rawgit.com/csm123/sharepoint-javascript-helpers/master/sharepoint-javascript-helpers.js"></script>
@@ -65,17 +65,20 @@ SJH focuses on certain use cases. To request another, file an Issue on this GitH
 ### Get list items
 
 ```javascript
-SharePoint.GetListItems(ListName, Query, Fields, Site)
+SharePoint.GetListItems(list, fields, query, site)
 ```
 
-**ListName**
-  ***Required***
+**list** (required)
   The name of the list on SharePoint, as it appears in the list URL.
 
   ex. "Documents"
 
-**Query**
-  ***Optional***
+**fields** (required)
+  An array of fields to retrieve from the list.
+
+  ex. ["Title", "Description"]
+
+**query**
   A query to filter, sort, or limit the list items returned. It is written in CAML, Microsoft's preferred method for querying SharePoint lists.
 
   Example:
@@ -87,35 +90,37 @@ SharePoint.GetListItems(ListName, Query, Fields, Site)
 
   See [more examples of CAML](http://sharepoint-works.blogspot.com/2012/05/caml-query-tutorial-for-sharepoint.html).
 
-  To return all items, type null (with no quotes) in place of a query.
+  To return all items, don't specify this parameter or use null.
 
-**Fields**
-  ***Required***
-  An array of fields to retrieve from the list.
-
-  ex. ["Title", "Description"]
-
-**Site**
-  ***Optional***
+**site**
   The relative URL of the SharePoint site containing the list.
 
   ex. "/CoolStuff"
 
-  To use the current site, type null (with no quotes).
+  To use the current site, don't specify this parameter or use null.
 
 #### In practice:
 
-Create a custom list called Test. It will start with just one column, Title.
+Create a custom list called Test. It will start with just one column, Title. Add a couple of items to the list.
 
 Call GetListItems, and specify what happens when the items are returned.
 
 ```javascript
-SharePoint.GetListItems("Test", null, ["Title"], null).done(function(items) {
+SharePoint.GetListItems("Test", ["Title"]).done(function(items) {
 		var itemsAsList =  $.map(items, function(item) { return item["Title"]; }).join(", ");
 		$("#sjh-test-getListItems").html("<p>Read list item test succeed. Here are the items from Test: " + itemsAsList);
 	});
 ```
 ### Add an item to a list
+
+```javascript
+SharePoint.AddItem(list, data, site)
+```
+
+**list** (required)
+
+
+SharePoint.AddItem("Test", {Title: "whamo442342345"}, null).done(function() { alert('success');});
 
 
 ### Get the current user's e-mail address
