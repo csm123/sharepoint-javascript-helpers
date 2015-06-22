@@ -16,7 +16,6 @@ SharePoint.Utils.GetContext = function(site) {
 };
 
 SharePoint.AddItem = function (list, data, site) {
-  /* .resolve(item) */
   var dfd = $.Deferred();
   var SPContext = SharePoint.Utils.GetContext(site);
 
@@ -34,7 +33,7 @@ SharePoint.AddItem = function (list, data, site) {
   SPContext.load(oListItem);
   SPContext.executeQueryAsync(
       function() { dfd.resolve(); },
-      Function.createDelegate(this, SharePoint.Error)
+      SharePoint.Error
   );
 
   return dfd.promise();
@@ -48,28 +47,27 @@ SharePoint.Error = function(sender, args) {
 };
 
 SharePoint.GetListItems = function(list, fields, query, site) {
-  var dfd = $.Deferred(function() {
-    var SPContext = SharePoint.Utils.GetContext(site);
-    var web = SPContext.get_web();
-    var list = web.get_lists().getByTitle(list);
-    var camlQuery = new SP.CamlQuery();
-    camlQuery.set_viewXml(query);
-    var ListItems = list.getItems(camlQuery);
-    SPContext.load(ListItems, 'Include(' + fields + ')');
-    SPContext.executeQueryAsync(function() {
-      var listItemArray = [];
-      var listItemEnumerator = ListItems.getEnumerator();
-      while (listItemEnumerator.moveNext()) {
-        var oListItem = listItemEnumerator.get_current();
-        var listItemAsObject = {};
-        $.each(fields, function(index, field) {
-          listItemAsObject[field] = oListItem.get_item(field);
-        });
-        listItemArray.push(listItemAsObject);
-      }
-      dfd.resolve(listItemArray);
-    }, SharePoint.Error);
-  });
+  var dfd = $.Deferred();
+  var SPContext = SharePoint.Utils.GetContext(site);
+  var web = SPContext.get_web();
+  var listObject = web.get_lists().getByTitle(list);
+  var camlQuery = new SP.CamlQuery();
+  camlQuery.set_viewXml(query);
+  var ListItems = listObject.getItems(camlQuery);
+  SPContext.load(ListItems, 'Include(' + fields + ')');
+  SPContext.executeQueryAsync(function() {
+    var listItemArray = [];
+    var listItemEnumerator = ListItems.getEnumerator();
+    while (listItemEnumerator.moveNext()) {
+      var oListItem = listItemEnumerator.get_current();
+      var listItemAsObject = {};
+      $.each(fields, function(index, field) {
+        listItemAsObject[field] = oListItem.get_item(field);
+      });
+      listItemArray.push(listItemAsObject);
+    }
+    dfd.resolve(listItemArray);
+  }, SharePoint.Error);
   return dfd.promise();
 };
 
@@ -83,6 +81,6 @@ SharePoint.GetCurrentUserEmail = function(site) {
     function(sender, args) {
       dfd.resolve(currentUser.get_email());
     }),
-  Function.createDelegate(this, SharePoint.Error));
+  SharePoint.Error);
   return dfd.promise();
 };
