@@ -30,7 +30,7 @@ These steps work in SharePoint 2010, 2013, and Office 365.
 
 If you're using SharePoint 2013 or Office 365, disable the Minimal Download Strategy site feature.
 
-Create a text file in SiteAssets, using SharePoint Designer. Call it myscripts.txt.
+Create a text file in SiteAssets, using SharePoint Designer. Call it myscripts.html.
 
 Seed the file with what you need for SJH, then add a test.
 
@@ -103,8 +103,6 @@ SharePoint.GetListItems(list, fields, query, site)
 
 Create a custom list called Test. It will start with just one column, Title. Add a couple of items to the list.
 
-Call GetListItems, and specify what happens when the items are returned.
-
 ```javascript
 SharePoint.GetListItems("Test", ["Title"]).done(function(items) {
 		var itemsAsList =  $.map(items, function(item) { return item["Title"]; }).join(", ");
@@ -118,18 +116,35 @@ SharePoint.AddItem(list, data, site)
 ```
 
 **list** (required)
+The name of the list on SharePoint to which you'd like to add an item, as it appears in the list URL.
 
+**data** (required)
+The data you'd like to add, as a JavaScript object.
 
-SharePoint.AddItem("Test", {Title: "whamo442342345"}, null).done(function() { alert('success');});
+```javascript
+{Title: "my new item", Description: "this is my new item"}
+```
+#### In practice:
 
+Create a custom list called Test. It will start with just one column, Title.
+
+```javascript
+SharePoint.AddItem("Test", {Title: "my new item"}).done(function() {
+  alert('success');
+  });
+```
 
 ### Get the current user's e-mail address
 
+#### In practice:
+
+```javascript
 SharePoint.GetCurrentUserEmail().done(
   function(email) {
     alert("Your e-mail address is " + email);
   }
   );
+```
 
 ## Inspirations
 

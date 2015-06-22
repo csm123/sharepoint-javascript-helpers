@@ -18,24 +18,18 @@ SharePoint.Utils.GetContext = function(site) {
 SharePoint.AddListItem = function (list, data, site) {
   var dfd = $.Deferred();
   var SPContext = SharePoint.Utils.GetContext(site);
-
   var oList = SPContext.get_web().get_lists().getByTitle(list);
-
   var itemCreateInfo = new SP.ListItemCreationInformation();
   var oListItem = oList.addItem(itemCreateInfo);
-
   $.each(data, function(key, value) {
     oListItem.set_item(key, value);
     });
-
   oListItem.update();
-
   SPContext.load(oListItem);
   SPContext.executeQueryAsync(
       function() { dfd.resolve(); },
       SharePoint.Error
   );
-
   return dfd.promise();
 };
 
@@ -77,10 +71,10 @@ SharePoint.GetCurrentUserEmail = function(site) {
   var web = SPContext.get_web();
   var currentUser = web.get_currentUser();
   SPContext.load(currentUser);
-  SPContext.executeQueryAsync(Function.createDelegate(this,
+  SPContext.executeQueryAsync(
     function(sender, args) {
       dfd.resolve(currentUser.get_email());
     }),
-  SharePoint.Error);
+    SharePoint.Error);
   return dfd.promise();
 };
