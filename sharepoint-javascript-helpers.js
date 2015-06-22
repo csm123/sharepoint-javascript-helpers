@@ -14,7 +14,8 @@ SharePoint.AddItem = function (site, list, data) {
 };
 
 SharePoint.Error = function(sender, args) {
-  alert('An error has occurred.' + '\n\n' + args.get_message() + args.get_stackTrace());
+  alert('An error has occurred.' + '\n\n' + args.get_message() +
+    args.get_stackTrace());
 };
 
 var Init = {};
