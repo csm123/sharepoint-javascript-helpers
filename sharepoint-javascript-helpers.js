@@ -1,6 +1,6 @@
 /*  SharePoint JavaScript Helpers
     Dependencies: lodash, jQuery
-    IN DEVELOPMENT
+    Compatible with: SharePoint 2010, SharePoint 2013, SharePoint on Office 365
 */
 
 var SharePoint = {};
@@ -20,12 +20,20 @@ SharePoint.Error = function(sender, args) {
 var Init = {};
 
 /*
-GetListItems
-listName: the name of your list, as specified under the List Settings
-query: a CAML query to determine which items to return. Specify null to
+GetListItems(listName, query, fields, site)
+
+listName
+the name of your list, as specified under the List Settings
+
+query
+a CAML query to determine which items to return. Specify null to
 return all items.
-fields: a comma-delimited list of fields to return
-site: leave blank for current site, or specify a releative URL for the site
+
+fields
+An array of fields to return from the list. ex. ["Title", "Description"]
+
+site
+Leave blank for current site, or specify a releative URL for the site
 */
 SharePoint.GetListItems = function(listName, query,
   fields, site) {
