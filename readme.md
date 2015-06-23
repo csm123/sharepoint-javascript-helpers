@@ -28,19 +28,26 @@ JavaScript Libraries:
 
 These steps work in SharePoint 2010, 2013, and Office 365.
 
-If you're using SharePoint 2013 or Office 365, disable the Minimal Download Strategy site feature.
+If you're using SharePoint 2013 or Office 365, disable the Minimal Download Strategy site feature on any sites using this script.
 
-Create a text file in SiteAssets, using SharePoint Designer. Call it myscripts.html.
+Copy sharepoint-javascript-helpers.js in SiteAssets.
 
-Seed the file with what you need for SJH, then add a test.
+Create an HTML file in SiteAssets, and link it to a content editor web part on a page. In that HTML file, place the following code:
 
 ```html
 <!-- Begin SJH initialization -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="https://rawgit.com/csm123/sharepoint-javascript-helpers/master/sharepoint-javascript-helpers.js"></script>
+<script src="../SiteAssets/sharepoint-javascript-helpers.js"></script>
 <!-- End SJH initialization -->
+```
 
-<!-- Begin SJH test -->
+You may need to adjust the path to sharepoint-javascript-helpers.js. The path above assumes the content editor web part is in SitePages or Pages.
+
+## Testing
+
+You can test that SJH is functioning by adding this to the end of the HTML file created in Easy Setup.
+
+```html
 <div id="sjh-test"></div>
 <script>
 SP.SOD.executeFunc("sp.js");
@@ -51,12 +58,9 @@ function sjhTest() {
     });
 }
 </script>
-<!-- End SJH test -->
 ```
 
-Add a content editor web part, and link it to the file you created in SiteAssets.
-
-Reload your page and confirm that the test passes. You should see a message inside the content editor web part with your e-mail address.
+You should see a message inside the content editor web part with your e-mail address.
 
 ## Uses
 
@@ -65,9 +69,10 @@ SJH focuses on certain use cases. To request another, file an Issue on this GitH
 ### Get list items
 
 ```javascript
-SharePoint.GetListItems(list, fields, query, site)
+SharePoint.GetListItems(options)
 ```
 
+#### Options
 **list** (required)
   The name of the list on SharePoint, as it appears in the list URL.
 
@@ -93,18 +98,16 @@ SharePoint.GetListItems(list, fields, query, site)
   To return all items, don't specify this parameter or use null.
 
 **site**
-  The relative URL of the SharePoint site containing the list.
+  The relative URL of the SharePoint site containing the list. If not specified, it defaults to the current site.
 
   ex. "/CoolStuff"
-
-  To use the current site, don't specify this parameter or use null.
 
 #### In practice:
 
 Create a custom list called Test. It will start with just one column, Title. Add a couple of items to the list.
 
 ```javascript
-SharePoint.GetListItems("Test", ["Title"]).done(function(items) {
+SharePoint.GetListItems({list: "Test", fields: ["Title"]}).done(function(items) {
 		var itemsAsList =  $.map(items, function(item) { return item["Title"]; }).join(", ");
 		$("#sjh-test-getListItems").html("<p>Read list item test succeed. Here are the items from Test: " + itemsAsList);
 	});
@@ -112,38 +115,44 @@ SharePoint.GetListItems("Test", ["Title"]).done(function(items) {
 ### Add an item to a list
 
 ```javascript
-SharePoint.AddItem(list, data, site)
+SharePoint.AddItem(options)
 ```
+
+#### Options
 
 **list** (required)
-The name of the list on SharePoint to which you'd like to add an item, as it appears in the list URL.
+  The name of the list on SharePoint to which you'd like to add an item, as it appears in the list URL.
 
 **data** (required)
-The data you'd like to add, as a JavaScript object.
+  The data you'd like to add, as a JavaScript object.
 
-```javascript
-{Title: "my new item", Description: "this is my new item"}
-```
+  ex. {Title: "my new item", Description: "this is my new item"}
+
 #### In practice:
 
 Create a custom list called Test. It will start with just one column, Title.
 
 ```javascript
-SharePoint.AddItem("Test", {Title: "my new item"}).done(function() {
-  alert('success');
+SharePoint.AddItem({list: "Test", data: {Title: "my new item"}}).done(function() {
+    alert('success');
   });
 ```
 
 ### Get the current user's e-mail address
 
+#### Options
+
+**site**
+  The relative URL of the SharePoint site containing the list. If not specified, it defaults to the current site.
+
+  ex. "/CoolStuff"
+
 #### In practice:
 
 ```javascript
-SharePoint.GetCurrentUserEmail().done(
-  function(email) {
+SharePoint.GetCurrentUserEmail().done(function(email) {
     alert("Your e-mail address is " + email);
-  }
-  );
+  });
 ```
 
 ## Inspirations

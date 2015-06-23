@@ -15,13 +15,14 @@ SharePoint.Utils.GetContext = function(site) {
   }
 };
 
-SharePoint.AddListItem = function (list, data, site) {
+SharePoint.AddListItem = function (options) {
+  var options = options || {};
   var dfd = $.Deferred();
-  var SPContext = SharePoint.Utils.GetContext(site);
-  var oList = SPContext.get_web().get_lists().getByTitle(list);
+  var SPContext = SharePoint.Utils.GetContext(options.site);
+  var oList = SPContext.get_web().get_lists().getByTitle(options.list);
   var itemCreateInfo = new SP.ListItemCreationInformation();
   var oListItem = oList.addItem(itemCreateInfo);
-  $.each(data, function(key, value) {
+  $.each(options.data, function(key, value) {
     oListItem.set_item(key, value);
     });
   oListItem.update();
@@ -41,12 +42,13 @@ SharePoint.Error = function(sender, args) {
 };
 
 SharePoint.GetListItems = function(options) {
+  var options = options || {};
   var dfd = $.Deferred();
   var SPContext = SharePoint.Utils.GetContext(options.site);
   var web = SPContext.get_web();
   var listObject = web.get_lists().getByTitle(options.list);
   var camlQuery = new SP.CamlQuery();
-  camlQuery.set_viewXml(query);
+  camlQuery.set_viewXml(options.query);
   var ListItems = listObject.getItems(camlQuery);
   SPContext.load(ListItems, 'Include(' + options.fields + ')');
   SPContext.executeQueryAsync(function() {
@@ -65,9 +67,10 @@ SharePoint.GetListItems = function(options) {
   return dfd.promise();
 };
 
-SharePoint.GetCurrentUserEmail = function(site) {
+SharePoint.GetCurrentUserEmail = function(options) {
+  var options = options || {};
   var dfd = $.Deferred();
-  var SPContext = SharePoint.Utils.GetContext(site);
+  var SPContext = SharePoint.Utils.GetContext(options.site);
   var web = SPContext.get_web();
   var currentUser = web.get_currentUser();
   SPContext.load(currentUser);
