@@ -40,22 +40,22 @@ SharePoint.Error = function(sender, args) {
   stackTrace);
 };
 
-SharePoint.GetListItems = function(list, fields, query, site) {
+SharePoint.GetListItems = function(options) {
   var dfd = $.Deferred();
-  var SPContext = SharePoint.Utils.GetContext(site);
+  var SPContext = SharePoint.Utils.GetContext(options.site);
   var web = SPContext.get_web();
-  var listObject = web.get_lists().getByTitle(list);
+  var listObject = web.get_lists().getByTitle(options.list);
   var camlQuery = new SP.CamlQuery();
   camlQuery.set_viewXml(query);
   var ListItems = listObject.getItems(camlQuery);
-  SPContext.load(ListItems, 'Include(' + fields + ')');
+  SPContext.load(ListItems, 'Include(' + options.fields + ')');
   SPContext.executeQueryAsync(function() {
     var listItemArray = [];
     var listItemEnumerator = ListItems.getEnumerator();
     while (listItemEnumerator.moveNext()) {
       var oListItem = listItemEnumerator.get_current();
       var listItemAsObject = {};
-      $.each(fields, function(index, field) {
+      $.each(options.fields, function(index, field) {
         listItemAsObject[field] = oListItem.get_item(field);
       });
       listItemArray.push(listItemAsObject);
