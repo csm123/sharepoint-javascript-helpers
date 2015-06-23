@@ -155,6 +155,41 @@ SharePoint.GetCurrentUserEmail().done(function(email) {
   });
 ```
 
+## React.js
+
+SJH's simplicity and use of promises makes it compatible with modern JavaScript libraries like React.JS.
+
+```javascript
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://csm123.github.io/sharepoint-javascript-helpers/sharepoint-javascript-helpers.js"></script>
+<script src="https://fb.me/react-0.13.3.js"></script>
+<script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+
+<div id="sjh-test-react"></div>
+
+<script type="text/jsx">
+var Test = React.createClass({
+  render: function() {
+		var items = this.props.items.map(function(item) {
+			return <li>{item.Title}</li>;
+		});
+    return (
+      <div>
+        <p>Here are the items in the list, rendered with React:</p>
+				<ul>
+					{items}
+				</ul>
+      </div>
+    );
+  }
+});
+
+SharePoint.GetListItems({list: "Test", fields: ["Title"]}).done(function(items) {
+	React.render(<Test items={items}/>, document.getElementById("sjh-test-react"));
+});
+</script>
+```
+
 ## Inspirations
 
 - Microsoft's [quick reference to SharePoint's JavaScript Client Side Object Model](https://msdn.microsoft.com/en-us/library/office/jj163201.aspx), which powers SJH.

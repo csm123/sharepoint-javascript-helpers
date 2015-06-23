@@ -2,7 +2,7 @@
     Dependencies: lodash, jQuery
     Compatible with: SharePoint 2010, SharePoint 2013, SharePoint on Office 365
 */
-
+console.log('test');
 var SharePoint = {};
 
 SharePoint.Utils = {};
