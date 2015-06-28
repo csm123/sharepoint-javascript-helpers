@@ -154,9 +154,9 @@ var Test = React.createClass({
     return (
       <div>
         <p>Here are the items in the list, rendered with React:</p>
-				<ul>
-					{items}
-				</ul>
+	<ul>
+		{items}
+	</ul>
       </div>
     );
   }
