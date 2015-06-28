@@ -46,13 +46,13 @@ You can test that SJH is functioning by adding this to the end of the HTML file 
 ```html
 <div id="sjh-test"></div>
 <script>
-SP.SOD.executeFunc("sp.js");
-ExecuteOrDelayUntilScriptLoaded(sjhTest, "sp.js");
-function sjhTest() {
-	SharePoint.GetCurrentUserEmail().done(function(user) {
-    $("#sjh-test").html("<p>Test succeeded. Hello, " + user + "!</p>");
-    });
-}
+	SP.SOD.executeFunc("sp.js");
+	ExecuteOrDelayUntilScriptLoaded(sjhTest, "sp.js");
+	function sjhTest() {
+		SharePoint.GetCurrentUserEmail().done(function(user) {
+			$("#sjh-test").html("<p>Test succeeded. Hello, " + user + "!</p>");
+		});
+	}
 </script>
 ```
 
@@ -76,9 +76,9 @@ SharePoint.GetListItems({
 	fields: ["Title"], /* An array of fields to retrieve from the list. */
 	query: "<View><Query><Where><Eq><FieldRef Name='Active'/><Value Type='Boolean'>1</Value></Eq></Where></Query></View>" /* OPTIONAL: A query to filter, sort, or limit the list items returned. It is written in CAML, Microsoft's preferred method for querying SharePoint lists. Leave this out to return all. */,
 	site: "/SomeSite" /* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
-	}).done(function(items) {
-		/* Do something with the array 'items' */
-	});
+}).done(function(items) {
+	/* Do something with the array 'items' */
+});
 ```
 
 #### Testing it out
@@ -109,7 +109,7 @@ Create a custom list called Test. It will start with just one column, Title.
 ```javascript
 SharePoint.AddItem({list: "Test", data: {Title: "my new item"}}).done(function() {
     alert('success');
-  });
+});
 ```
 
 ### Get the current user's e-mail address
@@ -128,7 +128,7 @@ SharePoint.GetCurrentUserEmail({
 ```javascript
 SharePoint.GetCurrentUserEmail().done(function(email) {
     alert("Your e-mail address is " + email);
-  });
+});
 ```
 
 ## React.js
