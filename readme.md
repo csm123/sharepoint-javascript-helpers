@@ -71,12 +71,16 @@ SJH focuses on certain use cases. To request another, file an Issue on this GitH
 
 ```javascript
 SharePoint.GetListItems({
-	list: "Test", /* The name of the list on SharePoint, as it appears in the list URL. */
-	fields: ["Title"], /* An array of fields to retrieve from the list. */
-	query: "<View><Query><Where><Eq><FieldRef Name='Active'/><Value Type='Boolean'>1</Value></Eq></Where></Query></View>" /* OPTIONAL: A query to filter, sort, or limit the list items returned. It is written in CAML, Microsoft's preferred method for querying SharePoint lists. Leave this out to return all. */,
-	site: "/SomeSite" /* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
+    /* The name of the list on SharePoint, as it appears in the list URL. */
+    list: "Test",
+    /* An array of fields to retrieve from the list. */
+    fields: ["Title"],
+    /* OPTIONAL: A query to filter, sort, or limit the list items returned. It is written in CAML, Microsoft's preferred method for querying SharePoint lists. Leave this out to return all. */
+    query: "<View><Query><Where><Eq><FieldRef Name='Active'/><Value Type='Boolean'>1</Value></Eq></Where></Query></View>",
+    /* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
+    site: "/SomeSite"
 }).done(function(items) {
-	/* Do something with the array 'items' */
+    /* Do something with the array 'items' */
 });
 ```
 
@@ -85,19 +89,31 @@ SharePoint.GetListItems({
 Create a custom list called Test. It will start with just one column, Title. Add a couple of items to the list.
 
 ```javascript
-SharePoint.GetListItems({list: "Test", fields: ["Title"]}).done(function(items) {
-		var itemsAsList =  $.map(items, function(item) { return item["Title"]; }).join(", ");
-		$("#sjh-test-getListItems").html("<p>Read list item test succeed. Here are the items from Test: " + itemsAsList);
-	});
+SharePoint.GetListItems({
+    list: "Test",
+    fields: ["Title"]
+}).done(function(items) {
+    var itemsAsList = $.map(items, function(item) {
+        return item["Title"];
+    }).join(", ");
+    $("#sjh-test-getListItems").html(
+        "<p>Read list item test succeed. Here are the items from Test: " +
+        itemsAsList);
+});
 ```
 ### Add an item to a list
 
 ```javascript
 SharePoint.AddItem({
-	list: "Test", /* The name of the list on SharePoint, as it appears in the list URL. */
-	data: {Title: "my new item", Description: "This item rocks"} /* The data you'd like to add, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
+    /* The name of the list on SharePoint, as it appears in the list URL. */
+    list: "Test",
+    /* The data you'd like to add, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
+    data: {
+        Title: "my new item",
+        Description: "This item rocks"
+    }
 }).done(function() {
-	/* Do something once this succeeds
+    /* Do something once this succeeds */
 });
 ```
 
@@ -106,7 +122,12 @@ SharePoint.AddItem({
 Create a custom list called Test. It will start with just one column, Title.
 
 ```javascript
-SharePoint.AddItem({list: "Test", data: {Title: "my new item"}}).done(function() {
+SharePoint.AddItem({
+    list: "Test",
+    data: {
+        Title: "my new item"
+    }
+}).done(function() {
     alert('success');
 });
 ```
@@ -115,9 +136,10 @@ SharePoint.AddItem({list: "Test", data: {Title: "my new item"}}).done(function()
 
 ```javascript
 SharePoint.GetCurrentUserEmail({
-	site: "/SomeSite" /* Leave this out, unless there is an issue. */
-).done(function(email) {
-	/* Do something with the email address in email */
+    /* OPTIONAL: Leave this out, unless there is an issue. */
+    site: "/SomeSite"
+}).done(function(email) {
+    /* Do something with the email address in email */
 });
 ```
 
