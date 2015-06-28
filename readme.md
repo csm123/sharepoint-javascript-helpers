@@ -65,12 +65,6 @@ SJH focuses on certain use cases. To request another, file an Issue on this GitH
 ### Get list items
 
 ```javascript
-SharePoint.GetListItems(options)
-```
-
-#### Options
-
-```javascript
 SharePoint.GetListItems({
 	list: "Test", /* The name of the list on SharePoint, as it appears in the list URL. */
 	fields: ["Title"], /* An array of fields to retrieve from the list. */
@@ -81,7 +75,7 @@ SharePoint.GetListItems({
 });
 ```
 
-#### Testing it out
+#### Example
 
 Create a custom list called Test. It will start with just one column, Title. Add a couple of items to the list.
 
@@ -102,7 +96,7 @@ SharePoint.AddItem({
 });
 ```
 
-#### Testing it out
+#### Example
 
 Create a custom list called Test. It will start with just one column, Title.
 
@@ -122,8 +116,7 @@ SharePoint.GetCurrentUserEmail({
 });
 ```
 
-
-#### Testing it out
+#### Example
 
 ```javascript
 SharePoint.GetCurrentUserEmail().done(function(email) {
@@ -131,34 +124,35 @@ SharePoint.GetCurrentUserEmail().done(function(email) {
 });
 ```
 
-## React.js
+## React
 
-SJH's simplicity and use of promises makes it compatible with modern JavaScript libraries like React.JS.
+SJH's simplicity and use of promises makes it compatible with modern JavaScript libraries like [React](http://facebook.github.io/react/).
 
 Here's is SJH and React combined, ready to run in a content editor web part:
 
 ```javascript
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="https://csm123.github.io/sharepoint-javascript-helpers/sharepoint-javascript-helpers.js"></script>
 <script src="https://fb.me/react-0.13.3.js"></script>
 <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+
+<script src="https://csm123.github.io/sharepoint-javascript-helpers/sharepoint-javascript-helpers.js"></script>
 
 <div id="sjh-test-react"></div>
 
 <script type="text/jsx">
 var Test = React.createClass({
   render: function() {
-		var items = this.props.items.map(function(item) {
-			return <li>{item.Title}</li>;
-		});
-    return (
-      <div>
-        <p>Here are the items in the list, rendered with React:</p>
-	<ul>
-		{items}
-	</ul>
-      </div>
-    );
+	var items = this.props.items.map(function(item) {
+		return <li>{item.Title}</li>;
+	});
+	return (
+	<div>
+		<p>Here are the items in the list, rendered with React:</p>
+		<ul>
+			{items}
+		</ul>
+	</div>
+	);
   }
 });
 
