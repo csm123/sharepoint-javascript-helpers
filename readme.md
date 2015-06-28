@@ -46,13 +46,18 @@ You can test that SJH is functioning by adding this to the end of the HTML file 
 ```html
 <div id="sjh-test"></div>
 <script>
-	SP.SOD.executeFunc("sp.js");
-	ExecuteOrDelayUntilScriptLoaded(sjhTest, "sp.js");
-	function sjhTest() {
-		SharePoint.GetCurrentUserEmail().done(function(user) {
-			$("#sjh-test").html("<p>Test succeeded. Hello, " + user + "!</p>");
-		});
-	}
+    SharePoint.GetListItems({
+        /* The name of the list on SharePoint, as it appears in the list URL. */
+        list: "Test",
+        /* An array of fields to retrieve from the list. */
+        fields: ["Title"],
+        /* OPTIONAL: A query to filter, sort, or limit the list items returned. It is written in CAML, Microsoft's preferred method for querying SharePoint lists. Leave this out to return all. */
+        query: "<View><Query><Where><Eq><FieldRef Name='Active'/><Value Type='Boolean'>1</Value></Eq></Where></Query></View>",
+        /* OPTIONAL: The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
+        site: "/SomeSite"
+    }).done(function(items) {
+        /* Do something with the array 'items' */
+    });
 </script>
 ```
 
