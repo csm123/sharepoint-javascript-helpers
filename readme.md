@@ -49,10 +49,10 @@ SJH focuses on certain use cases. To request another, file an Issue on this GitH
 
 ```javascript
 SharePoint.GetListItems({
-    list: "Test",	/* The name of the list on SharePoint, as it appears in the list URL. */
-    fields: ["Title"],	/* An array of fields to retrieve from the list. */
-    query: "<View><Query><Where><Eq><FieldRef Name='Active'/><Value Type='Boolean'>1</Value></Eq></Where></Query></View>",	 /* OPTIONAL: A query to filter, sort, or limit the list items returned. It is written in CAML, Microsoft's preferred method for querying SharePoint lists. Leave this out to return all. */
-    site: "/SomeSite"	/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
+    list: "Test",		/* The name of the list on SharePoint, as it appears in the list URL. */
+    fields: ["Title"],		/* An array of fields to retrieve from the list. */
+    query: "<View><Query><Where><Eq><FieldRef Name='Active'/><Value Type='Boolean'>1</Value></Eq></Where></Query></View>",	 	/* OPTIONAL: A query to filter, sort, or limit the list items returned. It is written in CAML, Microsoft's preferred method for querying SharePoint lists. Leave this out to return all. */
+    site: "/SomeSite"		/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
 }).done(function(items) {
     /* Do something with the array 'items' */
 });
