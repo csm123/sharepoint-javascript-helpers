@@ -49,10 +49,10 @@ SJH focuses on certain use cases. To request another, file an Issue on this GitH
 
 ```javascript
 SharePoint.GetListItems({
-    list: "Test",		/* The name of the list on SharePoint, as it appears in the list URL. */
-    fields: ["Title"],		/* An array of fields to retrieve from the list. */
+    list: "Test",	/* The name of the list on SharePoint, as it appears in the list URL. */
+    fields: ["Title"],	/* An array of fields to retrieve from the list. */
     query: "<View><Query><Where><Eq><FieldRef Name='Active'/><Value Type='Boolean'>1</Value></Eq></Where></Query></View>",	 	/* OPTIONAL: A query to filter, sort, or limit the list items returned. It is written in CAML, Microsoft's preferred method for querying SharePoint lists. Leave this out to return all. */
-    site: "/SomeSite"		/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
+    site: "/SomeSite"	/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
 }).done(function(items) {
     /* Do something with the array 'items' */
 });
@@ -79,12 +79,12 @@ SharePoint.GetListItems({
 ```javascript
 SharePoint.AddListItem({
     
-    list: "Test",		/* The name of the list on SharePoint, as it appears in the list URL. */
-    data: {		/* The data you'd like to add, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
+    list: "Test",	/* The name of the list on SharePoint, as it appears in the list URL. */
+    data: {	/* The data you'd like to add, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
         Title: "my new item",
         Description: "This item rocks"
     },
-    site: "/SomeSite"		/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
+    site: "/SomeSite"	/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
 }).done(function() {
     /* Do something once this succeeds */
 });
@@ -109,16 +109,12 @@ SharePoint.AddListItem({
 
 ```javascript
 SharePoint.UpdateListItem({
-    /* The name of the list on SharePoint, as it appears in the list URL. */
-    list: "Test",
-    /* The ID of the list item to update */
-    id: 1,
-    /* The data you'd like to update, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
-    data: {
+    list: "Test",	/* The name of the list on SharePoint, as it appears in the list URL. */
+    id: 1,	/* The ID of the list item to update */
+    data: {	/* The data you'd like to update, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
         Title: "my updated item"
     },
-    /* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
-    site: "/SomeSite"
+    site: "/SomeSite"	/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
 }).done(function() {
     /* Do something once this succeeds */
 });
@@ -139,7 +135,7 @@ SharePoint.AddListItem({
     /* AddListItem returns the ID of the item added, which we'll use to update that item */
     SharePoint.UpdateListItem({
         list: "Test",
-        id: id,
+        id: id,	
         data: {
             Title: "updated test item"
         }
@@ -153,8 +149,7 @@ SharePoint.AddListItem({
 
 ```javascript
 SharePoint.GetCurrentUserEmail({
-    /* OPTIONAL: Leave this out, unless there is an issue. */
-    site: "/SomeSite"
+    site: "/SomeSite"	 /* OPTIONAL: The current site is used if this is not specified. */
 }).done(function(email) {
     /* Do something with the email address in email */
 });
