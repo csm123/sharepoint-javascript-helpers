@@ -176,7 +176,7 @@ SharePoint.GetCurrentUserEmail().done(function(email) {
 
 ## React
 
-SJH's simplicity and use of promises makes it compatible with modern JavaScript libraries like [React](http://facebook.github.io/react/).
+SJH's simplicity makes it compatible with modern JavaScript libraries like [React](http://facebook.github.io/react/).
 
 Here's is SJH and React combined, ready to run in a content editor web part:
 
