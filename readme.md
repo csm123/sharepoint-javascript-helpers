@@ -78,15 +78,13 @@ SharePoint.GetListItems({
 
 ```javascript
 SharePoint.AddListItem({
-    /* The name of the list on SharePoint, as it appears in the list URL. */
-    list: "Test",
-    /* The data you'd like to add, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
-    data: {
+    
+    list: "Test",		/* The name of the list on SharePoint, as it appears in the list URL. */
+    data: {		/* The data you'd like to add, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
         Title: "my new item",
         Description: "This item rocks"
     },
-    /* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
-    site: "/SomeSite"
+    site: "/SomeSite"		/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
 }).done(function() {
     /* Do something once this succeeds */
 });
