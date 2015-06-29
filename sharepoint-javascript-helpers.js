@@ -15,6 +15,26 @@ SharePoint.Utils.GetContext = function(site) {
   }
 };
 
+SharePoint.UpdateListItem = function (options) {
+  var options = options || {};
+  var dfd = $.Deferred();
+  var SPContext = SharePoint.Utils.GetContext(options.site);
+  var oList = SPContext.get_web().get_lists().getByTitle(options.list);
+  var oListItem = oList.getItemById(options.id);
+
+  $.each(options.data, function(key, value) {
+    oListItem.set_item(key, value);
+  })
+  oListItem.update();
+
+  SPContext.executeQueryAsync(
+      function() { dfd.resolve(); },
+      SharePoint.Error
+  );
+
+  return dfd.promise();
+};
+
 SharePoint.AddListItem = function (options) {
   var options = options || {};
   var dfd = $.Deferred();
@@ -26,9 +46,9 @@ SharePoint.AddListItem = function (options) {
     oListItem.set_item(key, value);
     });
   oListItem.update();
-  SPContext.load(oListItem);
+  SPContext.load(oListItem); /* loading the item gets its ID */
   SPContext.executeQueryAsync(
-      function() { dfd.resolve(); },
+      function() { dfd.resolve(oListItem.get_id()); }, /* return the ID */
       SharePoint.Error
   );
   return dfd.promise();
