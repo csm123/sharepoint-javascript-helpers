@@ -96,8 +96,7 @@ SharePoint.GetListItems({
     var itemsAsList = $.map(items, function(item) {
         return item["Title"];
     }).join(", ");
-    $("#sjh-test-getListItems").html(
-        "<p>Read list item test succeed. Here are the items from Test: " +
+    alert("Read list item test succeed. Here are the items from Test: " +
         itemsAsList);
 });
 ```
