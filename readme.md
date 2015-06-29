@@ -43,7 +43,7 @@ You may need to adjust the path to sharepoint-javascript-helpers.js. The path ab
 
 SJH focuses on certain use cases. To request another, file an Issue on this GitHub repo.
 
-** All example code below can be placed after the Easy Setup code above, within the same content editor web part. **
+**All example code below can be placed after the Easy Setup code above, within the same content editor web part.**
 
 ### Get list items
 
