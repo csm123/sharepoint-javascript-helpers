@@ -104,14 +104,16 @@ SharePoint.GetListItems({
 ### Add an item to a list
 
 ```javascript
-SharePoint.AddItem({
+SharePoint.AddListItem({
     /* The name of the list on SharePoint, as it appears in the list URL. */
     list: "Test",
     /* The data you'd like to add, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
     data: {
         Title: "my new item",
         Description: "This item rocks"
-    }
+    },
+		/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
+		site: "/SomeSite"
 }).done(function() {
     /* Do something once this succeeds */
 });
@@ -122,13 +124,57 @@ SharePoint.AddItem({
 Create a custom list called Test. It will start with just one column, Title.
 
 ```javascript
-SharePoint.AddItem({
+SharePoint.AddListItem({
     list: "Test",
     data: {
         Title: "my new item"
     }
 }).done(function() {
     alert('success');
+});
+```
+
+### Update an item in a list
+
+```javascript
+SharePoint.UpdateListItem({
+    /* The name of the list on SharePoint, as it appears in the list URL. */
+    list: "Test",
+		/* The ID of the list item to update */
+		id: 1,
+    /* The data you'd like to update, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
+    data: {
+        Title: "my updated item"
+    },
+		/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
+		site: "/SomeSite"
+}).done(function() {
+    /* Do something once this succeeds */
+});
+```
+
+#### Example
+
+Create a custom list called Test.
+
+```javascript
+SharePoint.AddListItem({
+    list: "Test",
+    data: {
+        Title: "test item"
+    }
+}).done(function(id) {
+    alert("added item");
+    /* AddListItem returns the ID of the item added, which we'll use to update that item */
+    SharePoint.UpdateListItem({
+        list: "Test",
+        id: id,
+        data: {
+            Title: "updated test item"
+        }
+    }).done(function() {
+        alert("updated item");
+    });
 });
 ```
 
