@@ -24,7 +24,7 @@ SharePoint.UpdateListItem = function (options) {
 
   $.each(options.data, function(key, value) {
     oListItem.set_item(key, value);
-  })
+  });
   oListItem.update();
 
   SPContext.executeQueryAsync(
