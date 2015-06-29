@@ -112,8 +112,8 @@ SharePoint.AddListItem({
         Title: "my new item",
         Description: "This item rocks"
     },
-		/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
-		site: "/SomeSite"
+    /* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
+    site: "/SomeSite"
 }).done(function() {
     /* Do something once this succeeds */
 });
@@ -140,14 +140,14 @@ SharePoint.AddListItem({
 SharePoint.UpdateListItem({
     /* The name of the list on SharePoint, as it appears in the list URL. */
     list: "Test",
-		/* The ID of the list item to update */
-		id: 1,
+    /* The ID of the list item to update */
+    id: 1,
     /* The data you'd like to update, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
     data: {
         Title: "my updated item"
     },
-		/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
-		site: "/SomeSite"
+    /* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
+    site: "/SomeSite"
 }).done(function() {
     /* Do something once this succeeds */
 });
