@@ -39,30 +39,6 @@ These steps work in SharePoint 2010, 2013, and Office 365.
 	```
 You may need to adjust the path to sharepoint-javascript-helpers.js. The path above assumes the content editor web part is in SitePages or Pages.
 
-## Testing
-
-You can test that SJH is functioning by adding this to the end of the HTML file created in Easy Setup.
-
-```html
-<div id="sjh-test"></div>
-<script>
-    SharePoint.GetListItems({
-        /* The name of the list on SharePoint, as it appears in the list URL. */
-        list: "Test",
-        /* An array of fields to retrieve from the list. */
-        fields: ["Title"],
-        /* OPTIONAL: A query to filter, sort, or limit the list items returned. It is written in CAML, Microsoft's preferred method for querying SharePoint lists. Leave this out to return all. */
-        query: "<View><Query><Where><Eq><FieldRef Name='Active'/><Value Type='Boolean'>1</Value></Eq></Where></Query></View>",
-        /* OPTIONAL: The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
-        site: "/SomeSite"
-    }).done(function(items) {
-        /* Do something with the array 'items' */
-    });
-</script>
-```
-
-You should see a message inside the content editor web part with your e-mail address.
-
 ## Uses
 
 SJH focuses on certain use cases. To request another, file an Issue on this GitHub repo.
