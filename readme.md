@@ -78,7 +78,6 @@ SharePoint.GetListItems({
 
 ```javascript
 SharePoint.AddListItem({
-    
     list: "Test",	/* The name of the list on SharePoint, as it appears in the list URL. */
     data: {	/* The data you'd like to add, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
         Title: "my new item",
