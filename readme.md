@@ -2,11 +2,11 @@
 
 **IN DEVELOPMENT, NOT READY FOR PRODUCTION USE**
 
-SharePoint JavaScript Helpers (SJH) makes it easier to work with SharePoint lists through JavaScript. It does not provide pre-fab solutions, but makes it easier to build your own.
+SharePoint JavaScript Helpers (SJH) makes it easier to work with SharePoint lists through JavaScript.
 
 ## Capabilities
 
-These are very simple features that can be combined to produce complex SharePoint-based applications.
+SJH's simple features can be combined to produce complex SharePoint-based applications.
 
 - Get list items
 - Add item(s) to a list
@@ -205,6 +205,10 @@ SharePoint.GetListItems({list: "Test", fields: ["Title"]}).done(function(items) 
 Always use a list's **current** title, as specified in List Settings.
 
 Always use a field's **system** name, which is often different from its displayed name. To find a field's system name, go to List Settings and click on that field. The field's system name will be in the URL.
+
+## Roadmap
+
+For upcoming features, see the Issues tab. Feel free to submit your own!
 
 ## Inspirations
 
