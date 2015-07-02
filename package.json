@@ -1,0 +1,22 @@
+{
+  "name": "sharepoint-javascript-helpers",
+  "version": "1.0.0",
+  "description": "**IN DEVELOPMENT, NOT READY FOR PRODUCTION USE**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/csm123/sharepoint-javascript-helpers.git"
+  },
+  "author": "Corey Martin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csm123/sharepoint-javascript-helpers/issues"
+  },
+  "homepage": "https://github.com/csm123/sharepoint-javascript-helpers",
+  "dependencies": {
+    "es6-promise": "^2.3.0"
+  }
+}
