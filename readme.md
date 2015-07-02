@@ -18,10 +18,6 @@ SharePoint:
 
 - SharePoint 2010, 2013, or Office 365
 
-JavaScript Libraries:
-
-- jQuery
-
 ## Easy Setup
 
 These steps work in SharePoint 2010, 2013, and Office 365.
@@ -32,10 +28,7 @@ These steps work in SharePoint 2010, 2013, and Office 365.
 
 3. Create an HTML file in SiteAssets, and link it to a content editor web part on a page. In that HTML file, place the following code:
 	```html
-	<!-- Begin SJH initialization -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="../SiteAssets/sharepoint-javascript-helpers.js"></script>
-	<!-- End SJH initialization -->
 	```
 You may need to adjust the path to sharepoint-javascript-helpers.js. The path above assumes the content editor web part is in SitePages or Pages.
 
