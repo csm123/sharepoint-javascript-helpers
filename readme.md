@@ -127,7 +127,7 @@ SharePoint.AddListItem({
     /* AddListItem returns the ID of the item added, which we'll use to update that item */
     SharePoint.UpdateListItem({
         list: "Test",
-        id: id,	
+        id: id,
         data: {
             Title: "updated test item"
         }
@@ -186,7 +186,7 @@ var Test = React.createClass({
   }
 });
 
-SharePoint.GetListItems({list: "Test", fields: ["Title"]}).done(function(items) {
+SharePoint.GetListItems({list: "Test", fields: ["Title"]}).then(function(items) {
 	React.render(<Test items={items}/>, document.getElementById("sjh-test-react"));
 });
 </script>
@@ -197,6 +197,28 @@ SharePoint.GetListItems({list: "Test", fields: ["Title"]}).done(function(items) 
 Always use a list's **current** title, as specified in List Settings.
 
 Always use a field's **system** name, which is often different from its displayed name. To find a field's system name, go to List Settings and click on that field. The field's system name will be in the URL.
+
+## Errors
+
+Errors will result in a popup alert, helpful for debugging.
+
+To disable popup alerts, add this right after the <script> tag for sjh.js:
+
+```javascript
+SharePoint.Config.errorAlerts = false;
+```
+
+You can catch errors in your own code and do with them what you wish, by adding a second function to `then`.
+
+```javascript
+SharePoint.GetListItems({list: "Test", fields: ["Title"]}).then(
+	function(items) {
+		/* do something on success */
+		},
+	function(message, stackTrace) {
+		/* do something with the error */
+		});
+```
 
 ## Roadmap
 
