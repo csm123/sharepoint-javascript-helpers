@@ -25,9 +25,14 @@ SJH's simple features can be combined to produce complex SharePoint-based applic
 2. Copy sjh.js (in the `dist` folder above) to SiteAssets.
 
 3. Create an HTML file in SiteAssets, and link it to a content editor web part on a page. In that HTML file, place the following code:
-	```html
-	<script src="../SiteAssets/sjh.js"></script>
-	```
+  ```html
+    <script src="../SiteAssets/sjh.js"></script>
+    <script>
+        SP.SOD.executeFunc("sp.js");
+        ExecuteOrDelayUntilScriptLoaded(YOUR_FUNCTION_NAME_HERE, "sp.js");
+    </script>
+  ```
+Replace `YOUR_FUNCTION_NAME_HERE` with any SJH code you'd like to run on load. If no SJH code needs to run on load, remove that line. 
 You may need to adjust the path to sjh.js. The path above assumes the content editor web part is in SitePages or Pages.
 
 ## Uses
@@ -49,9 +54,17 @@ SJH.GetListItems({
 });
 ```
 
+#### Special fields
+
+Here are some quirky SharePoint fields that come with most lists. Include these in the fields, and SJH will include them in the results:
+
+- Id
+- DisplayName: In a document library, this is the file name without the extension. For a list, it's the item's title.
+- EncodedAbsUrl: In a document library, this is the URL to open the document. For a list, it's generally not useful.
+
 #### Example
 
-Create a custom list called Test. It will start with just one column, Title. Add a couple of items to the list.
+Before running the code below, create a custom list called Test. It will start with just one column, Title. Add a couple of items to the list.
 
 ```javascript
 SJH.GetListItems({
