@@ -205,8 +205,6 @@ SJH's simplicity makes it compatible with modern JavaScript libraries like [Reac
 Here's is SJH and React combined, ready to run in a content editor web part:
 
 ```html
-<!-- Place Easy Setup code here from above -->
-
 <script src="https://fb.me/react-0.13.3.js"></script>
 <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
 
@@ -214,8 +212,16 @@ Here's is SJH and React combined, ready to run in a content editor web part:
 
 <script type="text/jsx">
 var Test = React.createClass({
+  getInitialState: function() {
+    return {items: []};
+  },
+  componentWillMount: function() {
+    SJH.GetListItems({list: "Test", fields: ["Title"]}).then(function(items) {
+        this.setState({items: items});
+    }.bind(this));
+  },
   render: function() {
-	var items = this.props.items.map(function(item) {
+	var items = this.state.items.map(function(item) {
 		return <li>{item.Title}</li>;
 	});
 	return (
@@ -228,12 +234,22 @@ var Test = React.createClass({
 	);
   }
 });
+</script>
 
-SJH.GetListItems({list: "Test", fields: ["Title"]}).then(function(items) {
-	React.render(<Test items={items}/>, document.getElementById("sjh-test-react"));
-});
+
+<script src="../SiteAssets/sjh.js"></script>
+
+<script>
+    var renderTest = function() {
+        React.render(<Test items={items}/>, document.getElementById("sjh-test-react"));
+    }
+
+    SP.SOD.executeFunc("sp.js");
+    ExecuteOrDelayUntilScriptLoaded(renderTest, "sp.js");
 </script>
 ```
+
+To be production ready, you'll need to compile the JSX to JavaScript and use the minified version of React.
 
 ## List and field names
 
