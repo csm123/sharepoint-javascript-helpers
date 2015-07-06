@@ -76,7 +76,7 @@ SJH.AddListItem({
         Description: "This item rocks"
     },
     site: "/SomeSite"	/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
-}).then(function() {
+}).then(function(id) {
     /* Do something once this succeeds */
 });
 ```
@@ -91,8 +91,8 @@ SJH.AddListItem({
     data: {
         Title: "my new item"
     }
-}).then(function() {
-    alert("Item added");
+}).then(function(id) {
+    alert("Item added. Its ID is " + id.toString());
 });
 ```
 
