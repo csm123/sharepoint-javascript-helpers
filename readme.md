@@ -27,8 +27,10 @@ SJH's simple features can be combined to produce complex SharePoint-based applic
 3. Create an HTML file in SiteAssets, and link it to a content editor web part on a page. In that HTML file, place the following code:
   ```html
     <script src="../SiteAssets/sjh.js"></script>
-    SP.SOD.executeFunc("sp.js");
-    ExecuteOrDelayUntilScriptLoaded(YOUR_FUNCTION_NAME_HERE, "sp.js");
+    <script>
+        SP.SOD.executeFunc("sp.js");
+        ExecuteOrDelayUntilScriptLoaded(YOUR_FUNCTION_NAME_HERE, "sp.js");
+    </script>
   ```
 Replace `YOUR_FUNCTION_NAME_HERE` with any SJH code you'd like to run on load. If no SJH code needs to run on load, remove that line. 
 You may need to adjust the path to sjh.js. The path above assumes the content editor web part is in SitePages or Pages.
