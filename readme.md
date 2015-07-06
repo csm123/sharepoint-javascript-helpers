@@ -9,20 +9,18 @@ SharePoint JavaScript Helpers (SJH) makes it easier to work with SharePoint list
 SJH's simple features can be combined to produce complex SharePoint-based applications.
 
 - Get list items
-- Add item(s) to a list
+- Add list item
+- Update list item
 - Get the current user's e-mail address
 
 ## Compatibility
 
-SharePoint:
-
-- SharePoint 2010, 2013, or Office 365
+- SharePoint 2010, 2013, and Office 365.
+- Today's web browsers including IE 8 and above.
 
 ## Easy Setup
 
-These steps work in SharePoint 2010, 2013, and Office 365.
-
-1. If you're using SharePoint 2013 or Office 365, disable the Minimal Download Strategy site feature on any sites using this script.
+1. If you're using SharePoint 2013 or Office 365, disable the Minimal Download Strategy site feature on any sites using this script. The option to disable MDS is under Site Settings > Site Features. Alternatively, you can [optimize your JavaScript to be compatible with MDS](https://msdn.microsoft.com/en-us/library/office/dn456543.aspx), but that is outside the scope of this library.
 
 2. Copy sharepoint-javascript-helpers.js in SiteAssets.
 
@@ -46,7 +44,7 @@ SharePoint.GetListItems({
     fields: ["Title"],	/* An array of fields to retrieve from the list. */
     query: "<View><Query><Where><Eq><FieldRef Name='Active'/><Value Type='Boolean'>1</Value></Eq></Where></Query></View>",	 	/* OPTIONAL: A query to filter, sort, or limit the list items returned. It is written in CAML, Microsoft's preferred method for querying SharePoint lists. Leave this out to return all. */
     site: "/SomeSite"	/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
-}).done(function(items) {
+}).then(function(items) {
     /* Do something with the array 'items' */
 });
 ```
@@ -59,7 +57,7 @@ Create a custom list called Test. It will start with just one column, Title. Add
 SharePoint.GetListItems({
     list: "Test",
     fields: ["Title"]
-}).done(function(items) {
+}).then(function(items) {
     var itemsAsList = $.map(items, function(item) {
         return item["Title"];
     }).join(", ");
@@ -67,7 +65,8 @@ SharePoint.GetListItems({
         itemsAsList);
 });
 ```
-### Add an item to a list
+
+### Add list item
 
 ```javascript
 SharePoint.AddListItem({
@@ -77,7 +76,7 @@ SharePoint.AddListItem({
         Description: "This item rocks"
     },
     site: "/SomeSite"	/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
-}).done(function() {
+}).then(function() {
     /* Do something once this succeeds */
 });
 ```
@@ -92,8 +91,8 @@ SharePoint.AddListItem({
     data: {
         Title: "my new item"
     }
-}).done(function() {
-    alert('success');
+}).then(function() {
+    alert("Item added");
 });
 ```
 
@@ -107,7 +106,7 @@ SharePoint.UpdateListItem({
         Title: "my updated item"
     },
     site: "/SomeSite"	/* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
-}).done(function() {
+}).then(function() {
     /* Do something once this succeeds */
 });
 ```
@@ -122,8 +121,7 @@ SharePoint.AddListItem({
     data: {
         Title: "test item"
     }
-}).done(function(id) {
-    alert("added item");
+}).then(function(id) {
     /* AddListItem returns the ID of the item added, which we'll use to update that item */
     SharePoint.UpdateListItem({
         list: "Test",
@@ -131,8 +129,8 @@ SharePoint.AddListItem({
         data: {
             Title: "updated test item"
         }
-    }).done(function() {
-        alert("updated item");
+    }).then(function() {
+        alert("Item added and updated");
     });
 });
 ```
@@ -142,7 +140,7 @@ SharePoint.AddListItem({
 ```javascript
 SharePoint.GetCurrentUserEmail({
     site: "/SomeSite"	 /* OPTIONAL: The current site is used if this is not specified. */
-}).done(function(email) {
+}).then(function(email) {
     /* Do something with the email address in email */
 });
 ```
@@ -150,8 +148,8 @@ SharePoint.GetCurrentUserEmail({
 #### Example
 
 ```javascript
-SharePoint.GetCurrentUserEmail().done(function(email) {
-    alert("Your e-mail address is " + email);
+SharePoint.GetCurrentUserEmail().then(function(email) {
+    alert("Hi! Your e-mail address is " + email + ".");
 });
 ```
 
