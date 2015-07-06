@@ -22,13 +22,13 @@ SJH's simple features can be combined to produce complex SharePoint-based applic
 
 1. If you're using SharePoint 2013 or Office 365, disable the Minimal Download Strategy site feature on any sites using this script. The option to disable MDS is under Site Settings > Site Features. Alternatively, you can [optimize your JavaScript to be compatible with MDS](https://msdn.microsoft.com/en-us/library/office/dn456543.aspx), but that is outside the scope of this library.
 
-2. Copy sharepoint-javascript-helpers.js in SiteAssets.
+2. Copy sjh.js (in the `dist` folder above) to SiteAssets.
 
 3. Create an HTML file in SiteAssets, and link it to a content editor web part on a page. In that HTML file, place the following code:
 	```html
-	<script src="../SiteAssets/sharepoint-javascript-helpers.js"></script>
+	<script src="../SiteAssets/sjh.js"></script>
 	```
-You may need to adjust the path to sharepoint-javascript-helpers.js. The path above assumes the content editor web part is in SitePages or Pages.
+You may need to adjust the path to sjh.js. The path above assumes the content editor web part is in SitePages or Pages.
 
 ## Uses
 
