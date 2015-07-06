@@ -39,7 +39,7 @@ SJH focuses on certain use cases. To request another, file an Issue on this GitH
 ### Get list items
 
 ```javascript
-SharePoint.GetListItems({
+SJH.GetListItems({
     list: "Test",	/* The name of the list on SharePoint, as it appears in the list URL. */
     fields: ["Title"],	/* An array of fields to retrieve from the list. */
     query: "<View><Query><Where><Eq><FieldRef Name='Active'/><Value Type='Boolean'>1</Value></Eq></Where></Query></View>",	 	/* OPTIONAL: A query to filter, sort, or limit the list items returned. It is written in CAML, Microsoft's preferred method for querying SharePoint lists. Leave this out to return all. */
@@ -54,7 +54,7 @@ SharePoint.GetListItems({
 Create a custom list called Test. It will start with just one column, Title. Add a couple of items to the list.
 
 ```javascript
-SharePoint.GetListItems({
+SJH.GetListItems({
     list: "Test",
     fields: ["Title"]
 }).then(function(items) {
@@ -69,7 +69,7 @@ SharePoint.GetListItems({
 ### Add list item
 
 ```javascript
-SharePoint.AddListItem({
+SJH.AddListItem({
     list: "Test",	/* The name of the list on SharePoint, as it appears in the list URL. */
     data: {	/* The data you'd like to add, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
         Title: "my new item",
@@ -86,7 +86,7 @@ SharePoint.AddListItem({
 Create a custom list called Test. It will start with just one column, Title.
 
 ```javascript
-SharePoint.AddListItem({
+SJH.AddListItem({
     list: "Test",
     data: {
         Title: "my new item"
@@ -99,7 +99,7 @@ SharePoint.AddListItem({
 ### Update an item in a list
 
 ```javascript
-SharePoint.UpdateListItem({
+SJH.UpdateListItem({
     list: "Test",	/* The name of the list on SharePoint, as it appears in the list URL. */
     id: 1,	/* The ID of the list item to update */
     data: {	/* The data you'd like to update, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
@@ -116,14 +116,14 @@ SharePoint.UpdateListItem({
 Create a custom list called Test.
 
 ```javascript
-SharePoint.AddListItem({
+SJH.AddListItem({
     list: "Test",
     data: {
         Title: "test item"
     }
 }).then(function(id) {
     /* AddListItem returns the ID of the item added, which we'll use to update that item */
-    SharePoint.UpdateListItem({
+    SJH.UpdateListItem({
         list: "Test",
         id: id,
         data: {
@@ -138,7 +138,7 @@ SharePoint.AddListItem({
 ### Get the current user's e-mail address
 
 ```javascript
-SharePoint.GetCurrentUserEmail({
+SJH.GetCurrentUserEmail({
     site: "/SomeSite"	 /* OPTIONAL: The current site is used if this is not specified. */
 }).then(function(email) {
     /* Do something with the email address in email */
@@ -148,7 +148,7 @@ SharePoint.GetCurrentUserEmail({
 #### Example
 
 ```javascript
-SharePoint.GetCurrentUserEmail().then(function(email) {
+SJH.GetCurrentUserEmail().then(function(email) {
     alert("Hi! Your e-mail address is " + email + ".");
 });
 ```
@@ -161,21 +161,21 @@ With this method, your code under `then` is executed after all of the specified 
 
 ```javascript
 var getSomeItems = function() {
-    return SharePoint.GetListItems({
+    return SJH.GetListItems({
         list: "Some list",
         fields: ["Title"]
     });
 };
 
 var getMoreItems = function() {
-    return SharePoint.GetListItems({
+    return SJH.GetListItems({
         list: "Another list",
         fields: ["Title"]
     });
 };
 
-SharePoint.all([getSomeItems, getMoreItems])
-    .then(SharePoint.spread(function(someItems, moreItems) {
+SJH.all([getSomeItems, getMoreItems])
+    .then(SJH.spread(function(someItems, moreItems) {
         alert("I got " + someItems.length + " items from some list and "
         + moreItems.length + " items from another list!");
     }));
@@ -216,7 +216,7 @@ var Test = React.createClass({
   }
 });
 
-SharePoint.GetListItems({list: "Test", fields: ["Title"]}).then(function(items) {
+SJH.GetListItems({list: "Test", fields: ["Title"]}).then(function(items) {
 	React.render(<Test items={items}/>, document.getElementById("sjh-test-react"));
 });
 </script>
@@ -235,13 +235,13 @@ Errors will result in a popup alert, helpful for debugging.
 To disable popup alerts, add this right after the <script> tag for sjh.js:
 
 ```javascript
-SharePoint.Config.errorAlerts = false;
+SJH.Config.errorAlerts = false;
 ```
 
 You can catch errors in your own code and do with them what you wish, by adding a second function to `then`.
 
 ```javascript
-SharePoint.GetListItems({list: "Test", fields: ["Title"]}).then(
+SJH.GetListItems({list: "Test", fields: ["Title"]}).then(
 	function(items) {
 		/* do something on success */
 		},
@@ -257,4 +257,4 @@ For upcoming features, see the Issues tab. Feel free to submit your own!
 ## Inspirations
 
 - Microsoft's [quick reference to SharePoint's JavaScript Client Side Object Model](https://msdn.microsoft.com/en-us/library/office/jj163201.aspx), which powers SJH.
-- [SPServices](https://spservices.codeplex.com/), for pioneering and continuing to provide excellent JavaScript helpers for SharePoint.
+- [SPServices](https://spservices.codeplex.com/), for pioneering and continuing to provide excellent JavaScript helpers for SJH.
