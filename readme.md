@@ -53,7 +53,7 @@ SJH.GetListItems({
 
 Here are some quirky SharePoint fields that come with most lists. Include these in the fields, and SJH will include them in the results:
 
-- ID
+- Id
 - DisplayName: In a document library, this is the file name without the extension. For a list, it's the item's title.
 - EncodedAbsUrl: In a document library, this is the URL to open the document. For a list, it's generally not useful.
 
