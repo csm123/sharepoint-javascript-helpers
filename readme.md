@@ -245,7 +245,7 @@ Always use a field's **system** name, which is often different from its displaye
 
 Errors will result in a popup alert, helpful for debugging.
 
-To disable popup alerts, add this right after the <script> tag for sjh.js:
+To disable popup alerts, add this right after the `<script>` tag for sjh.js:
 
 ```javascript
 SJH.Config.errorAlerts = false;
