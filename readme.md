@@ -15,8 +15,8 @@ SJH's simple features can be combined to produce complex SharePoint-based applic
 
 ## Compatibility
 
-- SharePoint 2010, 2013, and Office 365.
-- Today's web browsers including IE 8 and above.
+- SharePoint 2010, 2013, and Office 365
+- Today's web browsers including IE 8 and above
 
 ## Easy Setup
 
@@ -152,6 +152,38 @@ SharePoint.GetCurrentUserEmail().then(function(email) {
     alert("Hi! Your e-mail address is " + email + ".");
 });
 ```
+
+## Perform multiple actions
+
+### At the same time (simultaneously)
+
+With this method, your code under `then` is executed after all of the specified actions are completed.
+
+```javascript
+var getSomeItems = function() {
+    return SharePoint.GetListItems({
+        list: "Some list",
+        fields: ["Title"]
+    });
+};
+
+var getMoreItems = function() {
+    return SharePoint.GetListItems({
+        list: "Another list",
+        fields: ["Title"]
+    });
+};
+
+SharePoint.all([getSomeItems, getMoreItems])
+    .then(SharePoint.spread(function(someItems, moreItems) {
+        alert("I got " + someItems.length + " items from some list and "
+        + moreItems.length + " items from another list!");
+    }));
+```
+
+### One after the other (sequentially)
+
+See the example above of updating an item in a list.
 
 ## React
 
