@@ -207,6 +207,7 @@ Here's is SJH and React combined, ready to run in a content editor web part:
 ```html
 <script src="https://fb.me/react-0.13.3.js"></script>
 <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+<script src="../SiteAssets/sjh.js"></script>
 
 <div id="sjh-test-react"></div>
 
@@ -234,18 +235,13 @@ var Test = React.createClass({
 	);
   }
 });
-</script>
 
+var renderTest = function() {
+    React.render(<Test items={items}/>, document.getElementById("sjh-test-react"));
+}
 
-<script src="../SiteAssets/sjh.js"></script>
-
-<script>
-    var renderTest = function() {
-        React.render(<Test items={items}/>, document.getElementById("sjh-test-react"));
-    }
-
-    SP.SOD.executeFunc("sp.js");
-    ExecuteOrDelayUntilScriptLoaded(renderTest, "sp.js");
+SP.SOD.executeFunc("sp.js");
+ExecuteOrDelayUntilScriptLoaded(renderTest, "sp.js");
 </script>
 ```
 
