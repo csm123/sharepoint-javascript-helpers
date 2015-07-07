@@ -67,7 +67,7 @@ Here are some quirky SharePoint fields that come with most lists. Include these 
 Before running the code below, create a custom list called Test. It will start with just one column, Title. Add a couple of items to the list.
 
 ```javascript
-SJH.GetListItems({
+SJH.getListItems({
     list: "Test",
     fields: ["Title"]
 }).then(function(items) {
@@ -82,7 +82,7 @@ SJH.GetListItems({
 ### Add list item
 
 ```javascript
-SJH.AddListItem({
+SJH.addListItem({
     list: "Test",	/* The name of the list on SharePoint, as it appears in the list URL. */
     data: {	/* The data you'd like to add, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
         Title: "my new item",
@@ -99,7 +99,7 @@ SJH.AddListItem({
 Create a custom list called Test. It will start with just one column, Title.
 
 ```javascript
-SJH.AddListItem({
+SJH.addListItem({
     list: "Test",
     data: {
         Title: "my new item"
@@ -112,7 +112,7 @@ SJH.AddListItem({
 ### Update an item in a list
 
 ```javascript
-SJH.UpdateListItem({
+SJH.updateListItem({
     list: "Test",	/* The name of the list on SharePoint, as it appears in the list URL. */
     id: 1,	/* The ID of the list item to update */
     data: {	/* The data you'd like to update, as a JavaScript object. Field names must match the system names of the fields (see section below called List and Field Names. */
@@ -129,14 +129,14 @@ SJH.UpdateListItem({
 Create a custom list called Test.
 
 ```javascript
-SJH.AddListItem({
+SJH.addListItem({
     list: "Test",
     data: {
         Title: "test item"
     }
 }).then(function(id) {
     /* AddListItem returns the ID of the item added, which we'll use to update that item */
-    SJH.UpdateListItem({
+    SJH.apdateListItem({
         list: "Test",
         id: id,
         data: {
@@ -148,10 +148,22 @@ SJH.AddListItem({
 });
 ```
 
+### Delete list item
+
+```javascript
+SJH.deleteListItem({
+    list: "Test",   /* The name of the list on SharePoint, as it appears in the list URL. */
+    id: 1, / * The ID of the list item to delete */
+    site: "/SomeSite"   /* The relative URL of the SharePoint site containing the list. Leave this out to use the current site. */
+}).then(function() {
+    /* Do something once this succeeds */
+});
+```
+
 ### Get the current user's e-mail address
 
 ```javascript
-SJH.GetCurrentUserEmail({
+SJH.getCurrentUserEmail({
     site: "/SomeSite"	 /* OPTIONAL: The current site is used if this is not specified. */
 }).then(function(email) {
     /* Do something with the email address in email */
@@ -161,7 +173,7 @@ SJH.GetCurrentUserEmail({
 #### Example
 
 ```javascript
-SJH.GetCurrentUserEmail().then(function(email) {
+SJH.getCurrentUserEmail().then(function(email) {
     alert("Hi! Your e-mail address is " + email + ".");
 });
 ```
@@ -174,14 +186,14 @@ With this method, your code under `then` is executed after all of the specified 
 
 ```javascript
 var getSomeItems = function() {
-    return SJH.GetListItems({
+    return SJH.getListItems({
         list: "Some list",
         fields: ["Title"]
     });
 };
 
 var getMoreItems = function() {
-    return SJH.GetListItems({
+    return SJH.getListItems({
         list: "Another list",
         fields: ["Title"]
     });
@@ -217,7 +229,7 @@ var Test = React.createClass({
     return {items: []};
   },
   componentWillMount: function() {
-    SJH.GetListItems({list: "Test", fields: ["Title"]}).then(function(items) {
+    SJH.getListItems({list: "Test", fields: ["Title"]}).then(function(items) {
         this.setState({items: items});
     }.bind(this));
   },
@@ -266,7 +278,7 @@ SJH.Config.errorAlerts = false;
 You can catch errors in your own code and do with them what you wish, by adding a second function to `then`.
 
 ```javascript
-SJH.GetListItems({list: "Test", fields: ["Title"]}).then(
+SJH.getListItems({list: "Test", fields: ["Title"]}).then(
 	function(items) {
 		/* do something on success */
 		},
