@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/csm123/sharepoint-javascript-helpers",
   "dependencies": {
-    "es6-promise": "^2.3.0"
+    "es6-promise": "^2.3.0",
+    "rsvp": "^3.0.18"
   }
 }
