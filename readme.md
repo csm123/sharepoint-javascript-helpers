@@ -275,16 +275,17 @@ To disable popup alerts, add this right after the `<script>` tag for sjh.js:
 SJH.Config.errorAlerts = false;
 ```
 
-You can catch errors in your own code and do with them what you wish, by adding a second function to `then`.
+You can catch errors in your own code and do with them what you wish by using `catch`. The syntax below is a bit odd, but makes this code IE 8 compatible.
 
 ```javascript
 SJH.getListItems({list: "Test", fields: ["Title"]}).then(
 	function(items) {
 		/* do something on success */
-		},
-	function(message, stackTrace) {
-		/* do something with the error */
-		});
+	})
+["catch"](
+	function(err) { 
+		/* Do something with the error in err */ 
+	});
 ```
 
 ## Roadmap
