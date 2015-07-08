@@ -267,9 +267,9 @@ Always use a field's **system** name, which is often different from its displaye
 
 ## Errors
 
-Errors will result in a popup alert, helpful for debugging.
+SharePoint-specific errors will result in a popup alert, helpful for debugging. Any other errors that SJH encounters will be thrown to the console. You're best off using Google Chrome and its console to debug your JavaScript.
 
-To disable popup alerts, add this right after the `<script>` tag for sjh.js:
+To disable error alerts, add this right after the `<script>` tag for sjh.js:
 
 ```javascript
 SJH.Config.errorAlerts = false;
