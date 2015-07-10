@@ -1,7 +1,5 @@
 # SharePoint JavaScript Helpers
 
-**IN DEVELOPMENT, NOT READY FOR PRODUCTION USE**
-
 SharePoint JavaScript Helpers (SJH) makes it easier to work with SharePoint lists through JavaScript.
 
 ## Capabilities
