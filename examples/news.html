@@ -7,17 +7,27 @@
 SP.SOD.executeFunc("sp.js");
 ExecuteOrDelayUntilScriptLoaded(launchNews, "sp.js");
 
+var getStories = function() {
+	return SJH.getListItems({
+  		list: "News",
+  		fields: ["Title", "Description"],
+	});
+};
+
+var getOtherStories = function() {
+	return SJH.getListItems({
+  		list: "News",
+  		fields: ["Title", "Description"],
+  		site: "/News/OtherSite"
+	});
+};
+
 function launchNews() {
 
-
-	SJH.getListItems({
-  		list: "News",
-  		fields: ["Title", "Description"]
-	}).then(function(stories) {
-  		React.render(<News stories={stories}/>, document.getElementById("components"))
-	});
-
-
+	SJH.all([getStories(), getOtherStories()]).then(SJH.spread(function(stories, otherStories) {
+		var allStories = stories.concat(otherStories);
+  		React.render(<News stories={allStories}/>, document.getElementById("components"));
+	}));
 
 }
 
