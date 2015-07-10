@@ -54,14 +54,6 @@ SJH.GetListItems({
 });
 ```
 
-#### Special fields
-
-Here are some quirky SharePoint fields that come with most lists. Include these in the fields, and SJH will include them in the results:
-
-- Id
-- DisplayName: In a document library, this is the file name without the extension. For a list, it's the item's title.
-- EncodedAbsUrl: In a document library, this is the URL to open the document. For a list, it's generally not useful.
-
 #### Example
 
 Before running the code below, create a custom list called Test. It will start with just one column, Title. Add a couple of items to the list.
@@ -78,6 +70,14 @@ SJH.getListItems({
         itemsAsList);
 });
 ```
+
+#### Special fields
+
+Here are some quirky SharePoint fields that come with most lists. Include these in the fields, and SJH will include them in the results:
+
+- Id
+- DisplayName: In a document library, this is the file name without the extension. For a list, it's the item's title.
+- EncodedAbsUrl: In a document library, this is the URL to open the document. For a list, it's generally not useful.
 
 ### Add list item
 
@@ -136,7 +136,7 @@ SJH.addListItem({
     }
 }).then(function(id) {
     /* AddListItem returns the ID of the item added, which we'll use to update that item */
-    SJH.apdateListItem({
+    SJH.updateListItem({
         list: "Test",
         id: id,
         data: {
