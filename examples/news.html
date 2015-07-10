@@ -1,12 +1,21 @@
 <div id="components"></div>
 
 <script src="https://csm123.github.io/sharepoint-javascript-helpers/dist/sjh.js"></script>
-<script src="https://fb.me/react-0.13.3.js"></script>
-<script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
 
 <script type="text/jsx">
 
-	/* Instruct SharePoint to run launchNews on page load */
+	/* This is an example of using SharePoint JavaScript Helpers and React JS to render a list of stories from two different sites */
+	/* Of course, you could do this with a content query web part, but this is meant to show the basis a potentially more complex application built on JavaScript */
+
+	/* This file would be linked to a content editor web part. The following two lists are required: */
+	/* 1. A list called News at /News - you can change that address below */
+	/* 2. A list called News on another site, at /News/OtherSite/ - you can change that address below */
+
+	/* This is not production ready yet. See https://github.com/csm123/sharepoint-javascript-helpers/wiki/Making-a-React-app-production-ready-on-SharePoint */
+
+	/* Instruct SharePoint to run 'launchNews' on page load */
 	SP.SOD.executeFunc("sp.js");
 	ExecuteOrDelayUntilScriptLoaded(launchNews, "sp.js");
 
@@ -15,6 +24,7 @@
 		return SJH.getListItems({
 	  		list: "News",
 	  		fields: ["Title", "Description"],
+	  		site: "/News"
 		});
 	};
 
@@ -66,11 +76,11 @@
 			var story = this.props.story;
 			return (
 				<li>
-				
-					/* If the story is clicked, run 'toggle' above */
+
+					{/* If the story is clicked, run 'toggle' above */}
 					<a href="#" onClick={this.toggle}>{story.Title}</a>
 
-					/* If the story is expanded, show its description */
+					{/* If the story is expanded, show its description */}
 					{this.state.expanded ?
 						<p>{story.Description}</p>
 					:
