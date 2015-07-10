@@ -255,7 +255,7 @@ ExecuteOrDelayUntilScriptLoaded(renderTest, "sp.js");
 </script>
 ```
 
-To be production ready, you'll need to compile the JSX to JavaScript and use the minified version of React.
+There are more steps before the React app is production ready. [See this guide](https://github.com/csm123/sharepoint-javascript-helpers/wiki/Making-a-React-app-production-ready-on-SharePoint).
 
 ## List and field names
 
