@@ -42,7 +42,7 @@ SJH focuses on certain use cases. To request another, file an Issue on this GitH
 ### Get list items
 
 ```javascript
-SJH.GetListItems({
+SJH.getListItems({
     list: "Test",	/* The name of the list on SharePoint, as it appears in the list URL. */
     fields: ["Title"],	/* An array of fields to retrieve from the list. */
     query: "<View><Query><Where><Eq><FieldRef Name='Active'/><Value Type='Boolean'>1</Value></Eq></Where></Query></View>",	 	/* OPTIONAL: A query to filter, sort, or limit the list items returned. It is written in CAML, Microsoft's preferred method for querying SharePoint lists. Leave this out to return all. */
