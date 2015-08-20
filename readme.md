@@ -197,7 +197,7 @@ var getMoreItems = function() {
     });
 };
 
-SJH.all([getSomeItems, getMoreItems])
+SJH.all([getSomeItems(), getMoreItems()])
     .then(SJH.spread(function(someItems, moreItems) {
         alert("I got " + someItems.length + " items from some list and "
         + moreItems.length + " items from another list!");
