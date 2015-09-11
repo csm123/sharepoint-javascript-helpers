@@ -159,6 +159,7 @@
 
 	    },
 	    function(sender, args) { 
+	      console.log(originalArguments);
 	      SJH.error(sender, args, reject, SJH.getListItems, originalArguments);
 	      });
 	  });
