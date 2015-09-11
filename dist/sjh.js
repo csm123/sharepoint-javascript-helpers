@@ -219,6 +219,7 @@
 	      SJH.Status.retryingSecurityValidation = true;
 	      UpdateFormDigest(SJH.Status.lastSiteUsed || "/");
 	      resolve(functionForRetry.apply(null, [argumentsForRetry[0]]));
+	      SJH.Status.retryingSecurityValidation = false;
 	      return;
 	    }
 
@@ -231,7 +232,7 @@
 	  };
 
 	RSVP.on("error", function(reason) {
-	  if (SJH.Config.errorAlerts && window.console) {
+	  if (SJH.Config.errorAlerts && window.console && reason) {
 	    console.assert(false, reason);
 	  }
 	});
