@@ -217,8 +217,8 @@
 	    functionForRetry && argumentsForRetry) {
 	      SJH.Status.retryingSecurityValidation = true;
 	      SJH.Utils.updateFormDigest();
-	      console.log("arguments: ") + argumentsForRetry;
-	      functionForRetry.apply(null, argumentsForRetry);
+	      console.log("arguments: ") + SJH.status.originalArguments;
+	      functionForRetry.apply(null, SJH.status.originalArguments);
 	  }
 
 	  if (SJH.Config.errorAlerts) {
