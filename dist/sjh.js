@@ -122,7 +122,7 @@
 	};
 
 	SJH.getListItems = function(options) {
-	  SJH.Status.originalArguments = arguments;
+	  var originalArguments = arguments;
 	  return new RSVP.Promise(function(resolve, reject) {
 	    var context = SJH.Utils.getContext(options.site);
 	    var web = context.get_web();
@@ -159,7 +159,7 @@
 
 	    },
 	    function(sender, args) { 
-	      SJH.error(sender, args, reject, SJH.getListItems, SJH.Status.originalArguments);
+	      SJH.error(sender, args, reject, SJH.getListItems, originalArguments);
 	      });
 	  });
 	};
@@ -217,8 +217,8 @@
 	    functionForRetry && argumentsForRetry) {
 	      SJH.Status.retryingSecurityValidation = true;
 	      SJH.Utils.updateFormDigest();
-	      console.log("arguments: ") + SJH.Status.originalArguments;
-	      functionForRetry.apply(null, SJH.Status.originalArguments);
+	      console.log("arguments: ") + argumentsForRetry;
+	      functionForRetry.apply(null, [argumentsForRetry]);
 	  }
 
 	  if (SJH.Config.errorAlerts) {
