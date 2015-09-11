@@ -63,7 +63,7 @@
 	SJH.Utils = {};
 
 	SJH.Utils.updateFormDigest = function(site) {
-	  UpdateFormDigest((site || "/"));
+	  return UpdateFormDigest("/");
 	};
 
 	SJH.Utils.getContext = function(site) {
