@@ -158,7 +158,7 @@
 	      return resolve(listItemArray);
 
 	    },
-	    function(sender, args) { 
+	    function(sender, args, originalArguments) { 
 	      SJH.error(sender, args, reject, SJH.getListItems, originalArguments);
 	      });
 	  });
