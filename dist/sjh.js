@@ -220,6 +220,9 @@
 	      UpdateFormDigest(SJH.Status.lastSiteUsed || "/");
 	      resolve(functionForRetry.apply(null, [argumentsForRetry[0]]));
 	      SJH.Status.retryingSecurityValidation = false;
+	      if (window.console) {
+	        console.log("Updated security validation");
+	      }
 	      return;
 	    }
 
