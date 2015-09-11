@@ -219,7 +219,7 @@
 	      SJH.Status.retryingSecurityValidation = true;
 	      SJH.Utils.updateFormDigest();
 	      console.log(argumentsForRetry);
-	      functionForRetry.apply(null, [argumentsForRetry[0]]);
+	      return functionForRetry.apply(null, [argumentsForRetry[0]]);
 	  }
 
 	  if (SJH.Config.errorAlerts) {
