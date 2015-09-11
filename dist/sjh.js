@@ -58,13 +58,11 @@
 
 	SJH.Status.retryingSecurityValidation = false;
 
+	SJH.Status.lastSiteUsed = "";
+
 	SJH.Config = {errorAlerts: true};
 
 	SJH.Utils = {};
-
-	SJH.Utils.updateFormDigest = function(site) {
-	  return UpdateFormDigest(site || "/");
-	};
 
 	SJH.Utils.getContext = function(site) {
 	  if (site) {
@@ -101,6 +99,7 @@
 	SJH.addListItem = function (options) {
 	  return new RSVP.Promise(function(resolve, reject) {
 	    var context = SJH.Utils.getContext(options.site);
+	    SJH.Status.lastSiteUsed = options.site;
 	    var list = context.get_web().get_lists().getByTitle(options.list);
 	    var itemCreateInfo = new SP.ListItemCreationInformation();
 	    var listItem = list.addItem(itemCreateInfo);
@@ -121,9 +120,9 @@
 
 	SJH.getListItems = function(options) {
 	  var originalArguments = arguments;
-	  var site = options.site;
 	  return new RSVP.Promise(function(resolve, reject) {
-	    var context = SJH.Utils.getContext(site);
+	    var context = SJH.Utils.getContext(options.site);
+	    SJH.Status.lastSiteUsed = options.site;
 	    var web = context.get_web();
 	    var listObject = web.get_lists().getByTitle(options.list);
 
@@ -166,6 +165,7 @@
 	SJH.updateListItem = function (options) {
 	  return new RSVP.Promise(function(resolve, reject) {
 	    var context = SJH.Utils.getContext(options.site);
+	    SJH.Status.lastSiteUsed = options.site;
 	    var list = context.get_web().get_lists().getByTitle(options.list);
 	    var listItem = list.getItemById(options.id);
 
@@ -184,6 +184,7 @@
 	SJH.deleteListItem = function (options) {
 	  return new RSVP.Promise(function(resolve, reject) {
 	    var context = SJH.Utils.getContext(options.site);
+	    SJH.Status.lastSiteUsed = options.site;
 	    var list = context.get_web().get_lists().getByTitle(options.list);
 	    var listItem = list.getItemById(options.id);
 
@@ -196,6 +197,7 @@
 	SJH.getCurrentUserEmail = function(options) {
 	  return new RSVP.Promise(function(resolve, reject) {
 	    var context = SJH.Utils.getContext((options && options.site) || null);
+	    SJH.Status.lastSiteUsed = options.site;
 	    var web = context.get_web();
 	    var currentUser = web.get_currentUser();
 
@@ -215,7 +217,7 @@
 	      SJH.Status.retryingSecurityValidation === false && 
 	      functionForRetry && argumentsForRetry) {
 	      SJH.Status.retryingSecurityValidation = true;
-	      UpdateFormDigest("/");
+	      UpdateFormDigest(SJH.Status.lastSiteUsed || "/");
 	      resolve(functionForRetry.apply(null, [argumentsForRetry[0]]));
 	      return;
 	    }
