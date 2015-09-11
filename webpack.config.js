@@ -5,6 +5,5 @@ module.exports = {
     output: {
         path: "dist/",
         filename: "sjh.js"
-    },
-    plugins: [new webpack.optimize.UglifyJsPlugin()]
+    }
 };
