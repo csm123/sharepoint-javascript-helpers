@@ -63,7 +63,7 @@
 	SJH.Utils = {};
 
 	SJH.Utils.updateFormDigest = function(site) {
-	  return UpdateFormDigest("/");
+	  return UpdateFormDigest(site || "/");
 	};
 
 	SJH.Utils.getContext = function(site) {
@@ -86,17 +86,15 @@
 	  return RSVP.all(promises);
 	};
 
-	SJH.executeQueryAsync = function(context, resolve, reject, returnValue) {
+	SJH.executeQueryAsync = function(context, resolve, reject, returnValue, site) {
 	  var originalArguments = arguments;
 	  context.executeQueryAsync(
 	    function() {
 	      var returnValueResolved = returnValue && returnValue();
 	      resolve(returnValueResolved); 
-	      SJH.Status.retryingSecurityValidation = false;
 	    },
 	    function(sender, args) { 
-	      SJH.error(sender, args, reject, SJH.executeQueryAsync, originalArguments);
-	      SJH.Status.retryingSecurityValidation = false;
+	      SJH.error(sender, args, reject, resolve, site, SJH.executeQueryAsync, originalArguments);
 	    });
 	};
 
@@ -117,14 +115,15 @@
 
 	    context.load(listItem); /* loading the item gets its ID */
 
-	    SJH.executeQueryAsync(context, resolve, reject, function() { return listItem.get_id() });
+	    SJH.executeQueryAsync(context, resolve, reject, function() { return listItem.get_id() }, options.site);
 	  });
 	};
 
 	SJH.getListItems = function(options) {
 	  var originalArguments = arguments;
+	  var site = options.site;
 	  return new RSVP.Promise(function(resolve, reject) {
-	    var context = SJH.Utils.getContext(options.site);
+	    var context = SJH.Utils.getContext(site);
 	    var web = context.get_web();
 	    var listObject = web.get_lists().getByTitle(options.list);
 
@@ -160,7 +159,7 @@
 	    },
 	    function(sender, args) { 
 	      console.log(originalArguments);
-	      SJH.error(sender, args, reject, SJH.getListItems, originalArguments);
+	      SJH.error(sender, args, reject, resolve, site, SJH.getListItems, originalArguments);
 	      });
 	  });
 	};
@@ -179,7 +178,7 @@
 
 	    listItem.update();
 
-	    SJH.executeQueryAsync(context, resolve, reject);
+	    SJH.executeQueryAsync(context, resolve, reject, null, options.site);
 	  });
 	};
 
@@ -191,7 +190,7 @@
 
 	    listItem.deleteObject();
 
-	    SJH.executeQueryAsync(context, resolve, reject);
+	    SJH.executeQueryAsync(context, resolve, reject, null, options.site);
 	  });
 	};
 
@@ -203,11 +202,11 @@
 
 	    context.load(currentUser);
 
-	    SJH.executeQueryAsync(context, resolve, reject, function() { return currentUser.get_email() });
+	    SJH.executeQueryAsync(context, resolve, reject, function() { return currentUser.get_email() }, options.site);
 	  });
 	};
 
-	SJH.error = function(sender, args, reject, functionForRetry, argumentsForRetry) {
+	SJH.error = function(sender, args, reject, resolve, functionForRetry, argumentsForRetry) {
 	  var message = (args && args.get_message()) || "";
 	  var stackTrace = (args && args.get_stackTrace()) || "";
 
@@ -218,8 +217,9 @@
 	    functionForRetry && argumentsForRetry) {
 	      SJH.Status.retryingSecurityValidation = true;
 	      SJH.Utils.updateFormDigest();
-	      console.log(argumentsForRetry);
-	      return functionForRetry.apply(null, [argumentsForRetry[0]]);
+	      resolve(functionForRetry.apply(null, [argumentsForRetry[0]]));
+	      SJH.Status.retryingSecurityValidation = false;
+	      return;
 	  }
 
 	  if (SJH.Config.errorAlerts) {
