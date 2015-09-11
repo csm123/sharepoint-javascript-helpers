@@ -88,14 +88,14 @@
 
 	SJH.executeQueryAsync = function(context, resolve, reject, returnValue) {
 	  var originalArguments = arguments;
-	  var action = context.executeQueryAsync(
+	  context.executeQueryAsync(
 	    function() {
 	      var returnValueResolved = returnValue && returnValue();
 	      resolve(returnValueResolved); 
 	      SJH.Status.retryingSecurityValidation = false;
 	    },
 	    function(sender, args) { 
-	      SJH.error(sender, args, reject, action, SJH.executeQueryAsync, originalArguments);
+	      SJH.error(sender, args, reject, SJH.executeQueryAsync, originalArguments);
 	      SJH.Status.retryingSecurityValidation = false;
 	    });
 	};
@@ -218,7 +218,7 @@
 	      SJH.Status.retryingSecurityValidation = true;
 	      SJH.Utils.updateFormDigest();
 	      functionForRetry.apply(null, argumentsForRetry);
-	      return;
+	      return "test";
 	  }
 
 	  if (SJH.Config.errorAlerts) {
