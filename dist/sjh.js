@@ -84,6 +84,8 @@
 	  return RSVP.all(promises);
 	};
 
+	SJH.RSVP = RSVP;
+
 	SJH.executeQueryAsync = function(context, resolve, reject, returnValue) {
 	  var originalArguments = arguments;
 	  context.executeQueryAsync(
@@ -207,32 +209,32 @@
 	  });
 	};
 
-	 SJH.error = function(sender, args, reject, resolve, functionForRetry, argumentsForRetry) {
-	    var message = (args && args.get_message()) || "";
-	    var stackTrace = (args && args.get_stackTrace()) || "";
+	SJH.error = function(sender, args, reject, resolve, functionForRetry, argumentsForRetry) {
+	  var message = (args && args.get_message()) || "";
+	  var stackTrace = (args && args.get_stackTrace()) || "";
 
-	    /* If action failed due to security validation error, get 
-	    new validation and retry once */
-	    if (message.indexOf("security validation") >= 0 && 
-	      SJH.Status.retryingSecurityValidation === false && 
-	      functionForRetry && argumentsForRetry) {
-	      SJH.Status.retryingSecurityValidation = true;
-	      UpdateFormDigest(SJH.Status.lastSiteUsed || "/");
-	      resolve(functionForRetry.apply(null, [argumentsForRetry[0]]));
-	      SJH.Status.retryingSecurityValidation = false;
-	      if (window.console) {
-	        console.log("Updated security validation");
-	      }
-	      return;
+	  /* If action failed due to security validation error, get 
+	  new validation and retry once */
+	  if (message.indexOf("security validation") >= 0 && 
+	    SJH.Status.retryingSecurityValidation === false && 
+	    functionForRetry && argumentsForRetry) {
+	    SJH.Status.retryingSecurityValidation = true;
+	    UpdateFormDigest(SJH.Status.lastSiteUsed || "/");
+	    resolve(functionForRetry.apply(null, [argumentsForRetry[0]]));
+	    SJH.Status.retryingSecurityValidation = false;
+	    if (window.console) {
+	      console.log("Updated security validation");
 	    }
+	    return;
+	  }
 
-	    if (SJH.Config.errorAlerts) {
-	      alert("An error has occurred." + '\n\n' + message +
-	      stackTrace);
-	    }
+	  if (SJH.Config.errorAlerts) {
+	    alert("An error has occurred." + '\n\n' + message +
+	    stackTrace);
+	  }
 
-	    reject && reject();
-	  };
+	  reject && reject();
+	};
 
 	RSVP.on("error", function(reason) {
 	  if (SJH.Config.errorAlerts && window.console && reason) {
