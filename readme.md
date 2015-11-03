@@ -247,7 +247,7 @@ var Test = React.createClass({
 });
 
 var renderTest = function() {
-    React.render(<Test items={items}/>, document.getElementById("sjh-test-react"));
+    React.render(<Test/>, document.getElementById("sjh-test-react"));
 }
 
 SP.SOD.executeFunc("sp.js");
